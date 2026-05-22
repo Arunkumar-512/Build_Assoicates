@@ -20,7 +20,14 @@ export default function Chatbot() {
 
   const [loading, setLoading] = useState(false)
 
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: crypto.randomUUID(),
+      role: "assistant",
+      content:
+        "Hello 👋\nHow can Build Associates help you today?"
+    }
+  ])
 
   const [sessionId] = useState(uuidv4())
 
@@ -123,68 +130,27 @@ export default function Chatbot() {
         )
       }
 
-      // STREAM READER
-      const reader =
-        response.body?.getReader()
+      // JSON RESPONSE
+      const data =
+        await response.json()
 
-      const decoder =
-        new TextDecoder()
+      // ASSISTANT MESSAGE
+      const assistantMessage: Message = {
 
-      if (!reader) return
+        id: crypto.randomUUID(),
 
-      // EMPTY ASSISTANT MESSAGE
-      const assistantId =
-        crypto.randomUUID()
+        role: "assistant",
 
-      let assistantText = ""
+        content: data.reply
+      }
 
+      // ADD ASSISTANT MESSAGE
       setMessages(prev => [
 
         ...prev,
 
-        {
-          id: assistantId,
-          role: "assistant",
-          content: ""
-        }
+        assistantMessage
       ])
-
-      // STREAM LOOP
-      while (true) {
-
-        const {
-          done,
-          value
-        } = await reader.read()
-
-        if (done) break
-
-        const chunk =
-          decoder.decode(value)
-
-        assistantText += chunk
-
-        // TYPING EFFECT
-        await new Promise(resolve =>
-
-          setTimeout(resolve, 10)
-        )
-
-        setMessages(prev =>
-
-          prev.map(msg =>
-
-            msg.id === assistantId
-
-              ? {
-                  ...msg,
-                  content: assistantText
-                }
-
-              : msg
-          )
-        )
-      }
 
     } catch (error) {
 
@@ -196,7 +162,9 @@ export default function Chatbot() {
 
         {
           id: crypto.randomUUID(),
+
           role: "assistant",
+
           content:
             "Something went wrong. Please try again."
         }
@@ -281,38 +249,6 @@ export default function Chatbot() {
 
         <div className="space-y-6">
 
-          {messages.length === 0 && (
-
-            <div
-              className="
-                h-full
-                flex
-                items-center
-                justify-center
-                text-gray-400
-                text-center
-              "
-            >
-
-              <div>
-
-                <div className="text-2xl mb-2">
-                  Build Associates AI
-                </div>
-
-                <div>
-                  Ask about architecture,
-                  interiors,
-                  planning,
-                  visualization,
-                  or construction services.
-                </div>
-
-              </div>
-
-            </div>
-          )}
-
           {/* MESSAGES */}
           {messages.map((message) => (
 
@@ -361,25 +297,6 @@ export default function Chatbot() {
 
                   </ReactMarkdown>
 
-                  {/* STREAM CURSOR */}
-                  {loading &&
-                    message.role === "assistant" &&
-                    message ===
-                      messages[
-                        messages.length - 1
-                      ] && (
-
-                      <span
-                        className="
-                          animate-pulse
-                          ml-1
-                        "
-                      >
-                        ▋
-                      </span>
-                    )
-                  }
-
                 </div>
 
               </div>
@@ -388,30 +305,50 @@ export default function Chatbot() {
           ))}
 
           {/* THINKING */}
-          {loading &&
-            messages.length > 0 &&
-            messages[
-              messages.length - 1
-            ]?.role !== "assistant" && (
+          {loading && (
 
-              <div className="flex justify-start">
+            <div className="flex justify-start">
 
-                <div
-                  className="
-                    bg-gray-100
-                    px-4
-                    py-3
-                    rounded-2xl
-                    text-sm
-                    animate-pulse
-                  "
-                >
-                  Thinking...
+              <div
+                className="
+                  bg-gray-100
+                  px-4
+                  py-3
+                  rounded-2xl
+                  text-sm
+                "
+              >
+
+                <div className="flex gap-1">
+
+                  <span className="animate-bounce">
+                    •
+                  </span>
+
+                  <span
+                    className="
+                      animate-bounce
+                      delay-100
+                    "
+                  >
+                    •
+                  </span>
+
+                  <span
+                    className="
+                      animate-bounce
+                      delay-200
+                    "
+                  >
+                    •
+                  </span>
+
                 </div>
 
               </div>
-            )
-          }
+
+            </div>
+          )}
 
           <div ref={messagesEndRef} />
 

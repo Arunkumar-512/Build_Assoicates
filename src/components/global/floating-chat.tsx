@@ -33,7 +33,14 @@ export default function FloatingChat() {
     useState(false)
 
   const [messages, setMessages] =
-    useState<Message[]>([])
+    useState<Message[]>([
+      {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content:
+          "Hello 👋\nHow can Build Associates help you today?"
+      }
+    ])
 
   const [sessionId] =
     useState(uuidv4())
@@ -54,6 +61,25 @@ export default function FloatingChat() {
       })
 
   }, [messages])
+
+  // =========================
+  // QUICK ACTIONS
+  // =========================
+
+  const quickActions = [
+
+    "House Plans",
+
+    "Interior Design",
+
+    "Villa Planning",
+
+    "3D Visualization",
+
+    "Pricing",
+
+    "Book Consultation"
+  ]
 
   // =========================
   // SEND MESSAGE
@@ -110,66 +136,53 @@ export default function FloatingChat() {
         })
       })
 
-      // STREAM READER
-      const reader =
-        response.body?.getReader()
+      // ERROR HANDLING
+      if (!response.ok) {
 
-      const decoder =
-        new TextDecoder()
+        throw new Error(
+          "Failed to fetch response"
+        )
+      }
 
-      if (!reader) return
+      // JSON RESPONSE
+      const data =
+        await response.json()
 
-      // EMPTY ASSISTANT MESSAGE
-      const assistantId =
-        crypto.randomUUID()
+      // ASSISTANT MESSAGE
+      const assistantMessage: Message = {
 
-      let assistantText = ""
+        id: crypto.randomUUID(),
+
+        role: "assistant",
+
+        content: data.reply
+      }
+
+      // ADD ASSISTANT MESSAGE
+      setMessages(prev => [
+
+        ...prev,
+
+        assistantMessage
+      ])
+
+    } catch (error) {
+
+      console.error(error)
 
       setMessages(prev => [
 
         ...prev,
 
         {
-          id: assistantId,
+          id: crypto.randomUUID(),
+
           role: "assistant",
-          content: ""
+
+          content:
+            "Something went wrong. Please try again."
         }
       ])
-
-      // STREAM LOOP
-      while (true) {
-
-        const {
-          done,
-          value
-        } = await reader.read()
-
-        if (done) break
-
-        const chunk =
-          decoder.decode(value)
-
-        assistantText += chunk
-
-        setMessages(prev =>
-
-          prev.map(msg =>
-
-            msg.id === assistantId
-
-              ? {
-                  ...msg,
-                  content: assistantText
-                }
-
-              : msg
-          )
-        )
-      }
-
-    } catch (error) {
-
-      console.error(error)
 
     } finally {
 
@@ -185,11 +198,20 @@ export default function FloatingChat() {
     e: React.KeyboardEvent<HTMLInputElement>
   ) {
 
-    if (e.key === "Enter") {
+    if (
+      e.key === "Enter" &&
+      !e.shiftKey
+    ) {
+
+      e.preventDefault()
 
       handleSend()
     }
   }
+
+  // =========================
+  // UI
+  // =========================
 
   return (
 
@@ -305,12 +327,7 @@ export default function FloatingChat() {
             "
           >
 
-            {[
-              "House Plans",
-              "Interior Design",
-              "Villa Planning",
-              "3D Visualization"
-            ].map((item) => (
+            {quickActions.map((item) => (
 
               <button
 
@@ -328,6 +345,7 @@ export default function FloatingChat() {
                   rounded-full
                   bg-gray-100
                   hover:bg-gray-200
+                  transition
                 "
               >
 
@@ -376,6 +394,7 @@ export default function FloatingChat() {
                     rounded-2xl
                     text-sm
                     whitespace-pre-wrap
+                    leading-7
 
                     ${message.role === "user"
 
@@ -386,11 +405,15 @@ export default function FloatingChat() {
                   `}
                 >
 
-                  <ReactMarkdown>
+                  <div className="prose prose-sm max-w-none">
 
-                    {message.content}
+                    <ReactMarkdown>
 
-                  </ReactMarkdown>
+                      {message.content}
+
+                    </ReactMarkdown>
+
+                  </div>
 
                 </div>
 
@@ -411,7 +434,33 @@ export default function FloatingChat() {
                     text-sm
                   "
                 >
-                  Thinking...
+
+                  <div className="flex gap-1">
+
+                    <span className="animate-bounce">
+                      •
+                    </span>
+
+                    <span
+                      className="
+                        animate-bounce
+                        delay-100
+                      "
+                    >
+                      •
+                    </span>
+
+                    <span
+                      className="
+                        animate-bounce
+                        delay-200
+                      "
+                    >
+                      •
+                    </span>
+
+                  </div>
+
                 </div>
 
               </div>
@@ -458,6 +507,8 @@ pricing...
                 py-3
                 outline-none
                 text-sm
+                focus:ring-2
+                focus:ring-black
               "
             />
 
@@ -473,6 +524,7 @@ pricing...
                 px-5
                 rounded-xl
                 text-sm
+                disabled:opacity-50
               "
             >
 
