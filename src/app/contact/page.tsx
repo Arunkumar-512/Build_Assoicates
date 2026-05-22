@@ -106,7 +106,7 @@ export default function ContactPage() {
             <div className="absolute inset-0 rounded-full bg-accent/20 blur-3xl opacity-60" />
 
             <Image
-              src="/building.png"
+              src="/28.png"
               alt="Building"
               width={1200}
               height={900}
@@ -254,11 +254,8 @@ export default function ContactPage() {
                 Our Offices
               </h2>
 
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-                {["Hyderabad", "Bangalore", "Chennai"].map(
-                  (office) => (
+              <div className="w-full">
                     <Card
-                      key={office}
                       className="rounded-[32px] border border-supporting bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                     >
                       <CardContent className="p-6">
@@ -267,7 +264,7 @@ export default function ContactPage() {
                         </div>
 
                         <h3 className="font-semibold text-primary">
-                          {office} Office
+                          Hyderabad Office
                         </h3>
 
                         <p className="mt-3 text-sm leading-6 text-details">
@@ -282,8 +279,6 @@ export default function ContactPage() {
                         </Button>
                       </CardContent>
                     </Card>
-                  )
-                )}
               </div>
             </div>
 

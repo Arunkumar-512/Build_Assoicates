@@ -78,7 +78,7 @@ export default function AboutPage() {
         {/* BG IMAGE */}
         <div className="absolute inset-0">
           <Image
-            src="/about-hero.jpg"
+            src="/26.png"
             alt="About Build Associates"
             fill
             priority
@@ -86,10 +86,10 @@ export default function AboutPage() {
           />
 
           {/* OVERLAY */}
-          <div className="absolute inset-0 bg-primary/75" />
+          <div className="absolute inset-0 bg-primary/45" />
 
           {/* LEFT GRADIENT */}
-          <div className="absolute inset-y-0 left-0 w-[65%] bg-gradient-to-r from-background via-background/95 to-transparent" />
+          {/* <div className="absolute inset-y-0 left-0 w-[65%]t" /> */}
 
           {/* GLOW */}
           <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-accent/20 blur-3xl" />
@@ -141,7 +141,7 @@ export default function AboutPage() {
 
             <div className="relative overflow-hidden rounded-[32px] border border-border premium-shadow">
               <Image
-                src="/about-office.jpg"
+                src="/25.png"
                 alt="Office"
                 width={900}
                 height={700}

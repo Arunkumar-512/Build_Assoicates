@@ -4,7 +4,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import FloatingChat from "@/components/global/floating-chat";
+import FloatingWhatsApp from "@/components/global/floating-whatsapp";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -113,9 +114,11 @@ export default function RootLayout({
           {/* PAGE CONTENT */}
           <section className="relative flex-1">
             {children}
+            <FloatingWhatsApp />
+            <FloatingChat />
+
           </section>
         </main>
-        <WhatsAppButton />
       </body>
     </html>
   );

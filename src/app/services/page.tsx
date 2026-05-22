@@ -23,63 +23,63 @@ const services = [
     title: "House Plans",
     description:
       "Custom house plans tailored to your lifestyle, space and future needs.",
-    image: "/services/house-plan.jpg",
+    image: "/1.jpg",
     icon: Home,
   },
   {
     title: "Interior Design",
     description:
       "Elegant and functional interiors that reflect your personality and comfort.",
-    image: "/services/interior.jpg",
+    image: "/7.jpg",
     icon: PencilRuler,
   },
   {
     title: "Elevations",
     description:
       "Stunning elevation designs that enhance aesthetics and add value.",
-    image: "/services/elevation.jpg",
+    image: "/6.jpg",
     icon: Building2,
   },
   {
     title: "Structural Design",
     description:
       "Safe, efficient and sustainable structural solutions for every type of building.",
-    image: "/services/structural.jpg",
+    image: "/24.jpg",
     icon: Ruler,
   },
   {
     title: "Material Testing",
     description:
       "Advanced testing to ensure quality, durability and safety of materials.",
-    image: "/services/material.jpg",
+    image: "/4.jpg",
     icon: ShieldCheck,
   },
   {
     title: "Cost Saving Consultation",
     description:
       "Smart strategies and expert advice to optimize costs without compromising quality.",
-    image: "/services/cost.jpg",
+    image: "/3.jpg",
     icon: ClipboardList,
   },
   {
     title: "Site Planning",
     description:
       "Efficient site layouts for better space utilization and smooth project execution.",
-    image: "/services/site.jpg",
+    image: "/8.jpg",
     icon: Landmark,
   },
   {
     title: "2D Drafting",
     description:
       "Accurate and detailed 2D drawings for planning and approvals.",
-    image: "/services/drafting.jpg",
+    image: "/2.jpg",
     icon: DraftingCompass,
   },
   {
     title: "3D Architectural Visualization",
     description:
       "Realistic 3D visualizations that bring your future project to life.",
-    image: "/services/3d.jpg",
+    image: "/20.jpg",
     icon: Boxes,
   },
 ];
@@ -92,17 +92,17 @@ export default function ServicesPage() {
         {/* BG */}
         <div className="absolute inset-0">
           <Image
-            src="/2.jpg"
+            src="/27.png"
             alt="Architecture"
             fill
             className="object-cover"
           />
 
           {/* OVERLAY */}
-          <div className="absolute inset-0 bg-primary/70" />
+          <div className="absolute inset-0 bg-primary/45" />
 
           {/* LEFT GRADIENT */}
-          <div className="absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-background via-background/90 to-transparent" />
+          {/* <div className="absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-background via-background/90 to-transparent" /> */}
 
           {/* GLOW */}
           <div className="absolute left-[-100px] top-[-100px] h-[400px] w-[400px] rounded-full bg-accent/20 blur-3xl" />

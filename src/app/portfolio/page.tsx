@@ -30,49 +30,49 @@ const projects = [
     type: "Villa",
     location: "Bangalore",
     size: "5,800 Sq.ft",
-    image: "/portfolio1.jpg",
+    image: "/9.jpg",
   },
   {
     title: "Harmony Duplex",
     type: "Duplex",
     location: "Hyderabad",
     size: "3,200 Sq.ft",
-    image: "/portfolio2.jpg",
+    image: "/10.jpg",
   },
   {
     title: "Urban Oasis",
     type: "Residential",
     location: "Chennai",
     size: "4,100 Sq.ft",
-    image: "/portfolio3.jpg",
+    image: "/11.jpg",
   },
   {
     title: "Summit Business Park",
     type: "Commercial",
     location: "Pune",
     size: "25,000 Sq.ft",
-    image: "/portfolio4.jpg",
+    image: "/12.jpg",
   },
   {
     title: "Luxury Living",
     type: "Interiors",
     location: "Mumbai",
     size: "2,600 Sq.ft",
-    image: "/portfolio5.jpg",
+    image: "/13.jpg",
   },
   {
     title: "TechPark Structure",
     type: "Structure",
     location: "Bangalore",
     size: "18,000 Sq.ft",
-    image: "/portfolio6.jpg",
+    image: "/14.jpg",
   },
   {
     title: "Hilltop Residence",
     type: "3D Model",
     location: "Coorg",
     size: "4,500 Sq.ft",
-    image: "/portfolio7.jpg",
+    image: "/15.jpg",
   },
 ];
 
@@ -82,14 +82,14 @@ export default function PortfolioPage() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-white">
         {/* OVERLAY */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/90 to-transparent" />
+        {/* <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/90 to-transparent" /> */}
 
         {/* ACCENT GLOW */}
         <div className="absolute left-[-120px] top-[-120px] z-10 h-[320px] w-[320px] rounded-full bg-accent/10 blur-3xl" />
 
         <div className="relative h-[620px] w-full">
           <Image
-            src="/hero-house.jpg"
+            src="/19.jpg"
             alt="Portfolio Hero"
             fill
             priority
@@ -201,7 +201,7 @@ export default function PortfolioPage() {
           <Card className="overflow-hidden rounded-[32px] border-0 shadow-premium">
             <div className="relative min-h-[420px]">
               <Image
-                src="/farmhouse.jpg"
+                src="/9.jpg"
                 alt="Modern Farmhouse"
                 fill
                 className="object-cover"
@@ -320,7 +320,7 @@ export default function PortfolioPage() {
           <div className="grid h-full lg:grid-cols-2">
             <div className="relative min-h-[340px]">
               <Image
-                src="/case-study.jpg"
+                src="/19.jpg"
                 alt="Case Study"
                 fill
                 className="object-cover"

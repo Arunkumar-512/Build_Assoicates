@@ -35,7 +35,7 @@ export default function HomePage() {
           {/* BG IMAGE */}
           <div className="absolute inset-0">
             <Image
-              src="/home.jpg"
+              src="/15.jpg"
               alt="Luxury Villa"
               fill
               priority
@@ -222,7 +222,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {["5.jpg", "6.jpg", "7.jpg", "2.jpg"].map((img, i) => (
+              {["12.jpg", "13.jpg", "14.jpg", "15.jpg"].map((img, i) => (
                 <Card
                   key={i}
                   className="overflow-hidden rounded-[22px] border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-premium"
@@ -259,7 +259,7 @@ export default function HomePage() {
 
             <div className="relative overflow-hidden rounded-[26px] shadow-premium">
               <Image
-                src="/3.jpg"
+                src="/13.jpg"
                 alt="Before After"
                 width={1200}
                 height={700}
@@ -334,7 +334,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid gap-5 lg:grid-cols-4">
-          {["2.jpg", "3.jpg", "4.jpg", "5.jpg"].map((img, i) => (
+          {["11.jpg", "12.jpg", "13.jpg", "14.jpg"].map((img, i) => (
             <div
               key={i}
               className="group relative overflow-hidden rounded-[28px] shadow-premium"

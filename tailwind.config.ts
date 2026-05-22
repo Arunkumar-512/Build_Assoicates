@@ -8,10 +8,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-     primary: "#181411",      // Deep Cocoa Black
-accent: "#8C5A46",       // Muted Terracotta Brown
-supporting: "#F3ECE4",   // Soft Warm Ivory
-details: "#4A3A32",      // Smoky Walnut
+        primary: "#181411",      // Deep Cocoa Black
+        accent: "#8C5A46",       // Muted Terracotta Brown
+        supporting: "#F3ECE4",   // Soft Warm Ivory
+        details: "#4A3A32",      // Smoky Walnut
       },
 
       fontFamily: {
