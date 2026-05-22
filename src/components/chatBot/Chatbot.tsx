@@ -12,10 +12,7 @@ type Message = {
 
 export default function Chatbot() {
 
-  // =========================
-  // STATE
-  // =========================
-
+ 
   const [input, setInput] = useState("")
 
   const [loading, setLoading] = useState(false)
@@ -31,9 +28,7 @@ export default function Chatbot() {
 
   const [sessionId] = useState(uuidv4())
 
-  // =========================
-  // AUTO SCROLL
-  // =========================
+
 
   const messagesEndRef =
     useRef<HTMLDivElement>(null)
@@ -48,9 +43,7 @@ export default function Chatbot() {
 
   }, [messages])
 
-  // =========================
-  // SUGGESTED QUESTIONS
-  // =========================
+
 
   const suggestions = [
 
@@ -67,10 +60,7 @@ export default function Chatbot() {
     "Modular kitchen ideas"
   ]
 
-  // =========================
-  // SEND MESSAGE
-  // =========================
-
+  
   async function handleSend(
     e?: React.FormEvent
   ) {
@@ -176,9 +166,7 @@ export default function Chatbot() {
     }
   }
 
-  // =========================
-  // ENTER KEY SUPPORT
-  // =========================
+    
 
   function handleKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>
@@ -194,10 +182,6 @@ export default function Chatbot() {
       handleSend()
     }
   }
-
-  // =========================
-  // UI
-  // =========================
 
   return (
 

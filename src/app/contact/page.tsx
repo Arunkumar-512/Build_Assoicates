@@ -9,6 +9,7 @@ import {
   CalendarDays,
   ShieldCheck,
   Building2,
+  ArrowRight,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -26,53 +27,270 @@ import {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-supporting/20 text-primary antialiased">
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden border-b border-supporting bg-white">
-        {/* BG EFFECTS */}
-        <div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-accent/20 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-primary/5 blur-3xl" />
+    <main className="min-h-screen overflow-hidden bg-background text-foreground">
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute inset-0">
+          <Image
+            src="/28.png"
+            alt="Architecture"
+            fill
+            priority
+            className="object-cover object-center"
+          />
 
-        {/* FULL WIDTH */}
-        <div className="relative grid w-full grid-cols-1 items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:px-14 xl:px-20 2xl:px-28">
-          {/* LEFT */}
-          <div>
-            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.3em] text-accent">
-              Contact Us
-            </p>
+          <div className="absolute inset-0 bg-primary/70" />
 
-            <h1 className="max-w-4xl text-5xl font-black leading-[1.02] tracking-[-0.04em] text-primary lg:text-6xl xl:text-7xl">
-              Let&apos;s Build Something{" "}
-              <span className="text-accent">
-                Extraordinary Together
-              </span>
-            </h1>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/60" />
 
-            <div className="mt-6 h-1 w-28 rounded-full bg-accent" />
+          <div className="absolute -left-24 top-0 h-[420px] w-[420px] rounded-full bg-accent/20 blur-3xl" />
 
-            <p className="mt-8 max-w-3xl text-lg leading-8 text-details lg:text-xl">
-              Have a project in mind? We&apos;re here to help you
-              transform your vision into reality with precision,
-              innovation, and expert consultation.
-            </p>
+          <div className="absolute bottom-0 right-0 h-[320px] w-[320px] rounded-full bg-accent/10 blur-3xl" />
+        </div>
 
-            {/* FEATURES */}
-            <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="relative z-10 premium-container py-24 lg:py-32">
+          <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="max-w-3xl">
+              <p className="inline-flex rounded-full border border-white/10 bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-accent backdrop-blur-xl">
+                Contact Build Associates
+              </p>
+
+              <h1 className="mt-7 text-5xl font-black leading-[0.95] tracking-[-0.05em] text-white lg:text-7xl">
+                Let’s Create
+                <br />
+                Something
+                <span className="block text-white/60">
+                  Extraordinary
+                </span>
+              </h1>
+
+              <p className="mt-8 max-w-2xl text-lg leading-9 text-white/70">
+                From architecture and interiors to structural
+                planning and consultation — our team is ready to
+                help transform your vision into reality.
+              </p>
+
+              <div className="mt-12 grid gap-5 sm:grid-cols-3">
+                {[
+                  {
+                    icon: Clock3,
+                    title: "Quick Response",
+                    desc: "Within 2 Hours",
+                  },
+                  {
+                    icon: CalendarDays,
+                    title: "Free Consultation",
+                    desc: "Expert Guidance",
+                  },
+                  {
+                    icon: ShieldCheck,
+                    title: "Trusted Process",
+                    desc: "Professional Support",
+                  },
+                ].map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <div
+                      key={item.title}
+                      className="rounded-[28px] border border-white/10 bg-white/10 p-5 backdrop-blur-2xl"
+                    >
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+                        <Icon className="h-5 w-5 text-accent" />
+                      </div>
+
+                      <h3 className="mt-5 text-sm font-semibold text-white">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-2 text-sm text-white/60">
+                        {item.desc}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="hidden lg:block">
+              <Card className="overflow-hidden rounded-[36px] border border-white/10 bg-white/10 backdrop-blur-2xl">
+                <CardContent className="p-8">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-6">
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.28em] text-accent">
+                        Build Associates
+                      </p>
+
+                      <h3 className="mt-3 text-3xl font-black text-white">
+                        Start Your Project
+                      </h3>
+                    </div>
+
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
+                      <Building2 className="text-white" />
+                    </div>
+                  </div>
+
+                  <div className="mt-8 space-y-5">
+                    {[
+                      {
+                        icon: Phone,
+                        title: "Call Us",
+                        value: "+91 98765 43210",
+                      },
+                      {
+                        icon: Mail,
+                        title: "Email Address",
+                        value: "info@buildsmart.com",
+                      },
+                      {
+                        icon: MessageCircle,
+                        title: "WhatsApp Support",
+                        value: "Available 24/7",
+                      },
+                    ].map((item) => {
+                      const Icon = item.icon;
+
+                      return (
+                        <div
+                          key={item.title}
+                          className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4"
+                        >
+                          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+                            <Icon className="h-5 w-5 text-accent" />
+                          </div>
+
+                          <div>
+                            <p className="text-sm text-white/50">
+                              {item.title}
+                            </p>
+
+                            <h4 className="mt-1 font-semibold text-white">
+                              {item.value}
+                            </h4>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* <Button className="mt-8 h-14 w-full rounded-2xl bg-primary text-white transition-all duration-300 hover:bg-primary/90">
+                    Schedule Consultation
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button> */}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="premium-container py-20">
+        <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="space-y-8">
+            <Card className="premium-card overflow-hidden rounded-[36px] border-border/60">
+              <CardContent className="p-8 lg:p-10">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+                      Send Message
+                    </p>
+
+                    <h2 className="mt-4 text-4xl font-black tracking-[-0.04em] text-primary">
+                      Let’s Talk About
+                      <br />
+                      Your Project
+                    </h2>
+                  </div>
+
+                  <div className="hidden h-16 w-16 items-center justify-center rounded-3xl bg-accent/10 lg:flex">
+                    <Mail className="h-7 w-7 text-accent" />
+                  </div>
+                </div>
+
+                <form className="mt-10 space-y-5">
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Input
+                      placeholder="Full Name"
+                      className="h-14 rounded-2xl border-border bg-background"
+                    />
+
+                    <Input
+                      type="email"
+                      placeholder="Email Address"
+                      className="h-14 rounded-2xl border-border bg-background"
+                    />
+                  </div>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Input
+                      placeholder="Phone Number"
+                      className="h-14 rounded-2xl border-border bg-background"
+                    />
+
+                    <Input
+                      placeholder="Project Subject"
+                      className="h-14 rounded-2xl border-border bg-background"
+                    />
+                  </div>
+
+                  <Textarea
+                    placeholder="Tell us about your project..."
+                    className="min-h-[220px] rounded-2xl border-border bg-background"
+                  />
+
+                  <Button className="h-14 w-full rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition-all duration-300 hover:bg-details">
+                    Send Message
+                  </Button>
+
+                  <p className="text-center text-sm text-muted-foreground">
+                    Your information is secure and confidential.
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden rounded-[36px] border border-border bg-card">
+              <div className="border-b border-border p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
+                  Visit Our Office
+                </p>
+
+                <h3 className="mt-3 text-2xl font-black text-primary">
+                  Hyderabad Office
+                </h3>
+              </div>
+
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18"
+                width="100%"
+                height="420"
+                loading="lazy"
+                className="border-0"
+              />
+            </Card>
+          </div>
+
+          <div className="space-y-8">
+            <div className="grid gap-5 sm:grid-cols-2">
               {[
                 {
-                  icon: Clock3,
-                  title: "Quick Response",
-                  desc: "Within 2 Hours",
+                  icon: Phone,
+                  title: "Call Us",
+                  desc: "+91 98765 43210",
+                  sub: "Mon - Sat • 9AM - 6PM",
                 },
                 {
-                  icon: CalendarDays,
-                  title: "Free Consultation",
-                  desc: "30-min Expert Session",
+                  icon: Mail,
+                  title: "Email Us",
+                  desc: "info@buildsmart.com",
+                  sub: "Quick Response Support",
                 },
                 {
-                  icon: ShieldCheck,
-                  title: "Client Focused",
-                  desc: "Quality & Trust",
+                  icon: MessageCircle,
+                  title: "WhatsApp",
+                  desc: "Chat With Our Team",
+                  sub: "Available 24/7",
+                  span: "sm:col-span-2",
                 },
               ].map((item) => {
                 const Icon = item.icon;
@@ -80,233 +298,87 @@ export default function ContactPage() {
                 return (
                   <Card
                     key={item.title}
-                    className="rounded-3xl border border-supporting bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                    className={`premium-card rounded-[32px] transition-all duration-300 hover:-translate-y-1 hover:shadow-premium ${item.span}`}
                   >
-                    <CardContent className="p-6">
-                      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
-                        <Icon className="h-6 w-6 text-accent" />
+                    <CardContent className="p-7">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
+                        <Icon className="text-accent" />
                       </div>
 
-                      <h3 className="font-semibold text-primary">
+                      <h3 className="mt-6 text-lg font-bold text-primary">
                         {item.title}
                       </h3>
 
-                      <p className="mt-2 text-sm text-details">
+                      <p className="mt-3 text-base text-details">
                         {item.desc}
+                      </p>
+
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {item.sub}
                       </p>
                     </CardContent>
                   </Card>
                 );
               })}
             </div>
-          </div>
 
-          {/* RIGHT IMAGE */}
-          <div className="relative flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full bg-accent/20 blur-3xl opacity-60" />
+            <Card className="premium-card overflow-hidden rounded-[36px]">
+              <div className="relative h-[260px] overflow-hidden">
+                <Image
+                  src="/27.png"
+                  alt="Office"
+                  fill
+                  className="object-cover"
+                />
 
-            <Image
-              src="/28.png"
-              alt="Building"
-              width={1200}
-              height={900}
-              priority
-              className="relative z-10 w-full max-w-[850px] rounded-[40px] object-cover shadow-[0_30px_100px_rgba(245,158,11,0.18)]"
-            />
-          </div>
-        </div>
-      </section>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent" />
 
-      {/* MAIN CONTACT SECTION */}
-      <section className="w-full px-6 py-20 lg:px-14 xl:px-20 2xl:px-28">
-        <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-          {/* LEFT SIDE */}
-          <div className="space-y-8">
-            {/* CONTACT FORM */}
-            <Card className="rounded-[36px] border border-supporting bg-white shadow-sm transition-all duration-300 hover:shadow-xl">
-              <CardContent className="p-8 lg:p-10">
-                <h2 className="text-3xl font-black tracking-tight text-primary">
-                  Send Us a Message
-                </h2>
-
-                <p className="mt-3 text-details">
-                  Fill out the form below and our team will contact
-                  you shortly.
-                </p>
-
-                <form className="mt-10 space-y-5">
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <Input
-                      placeholder="Full Name"
-                      className="h-14 rounded-2xl border-supporting"
-                    />
-
-                    <Input
-                      type="email"
-                      placeholder="Email Address"
-                      className="h-14 rounded-2xl border-supporting"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <Input
-                      placeholder="Phone Number"
-                      className="h-14 rounded-2xl border-supporting"
-                    />
-
-                    <Input
-                      placeholder="Subject"
-                      className="h-14 rounded-2xl border-supporting"
-                    />
-                  </div>
-
-                  <Textarea
-                    placeholder="Write your message..."
-                    className="min-h-[220px] rounded-2xl border-supporting"
-                  />
-
-                  <Button className="h-14 w-full rounded-2xl bg-primary text-base font-semibold text-white transition-all duration-300 hover:bg-details">
-                    Send Message
-                  </Button>
-
-                  <p className="text-center text-sm text-details/60">
-                    Your information is secure with us.
+                <div className="absolute bottom-0 p-7 text-white">
+                  <p className="text-xs uppercase tracking-[0.28em] text-white/90">
+                    Main Office
                   </p>
-                </form>
-              </CardContent>
+
+                  <h3 className="mt-3 text-3xl font-black">
+                    Hyderabad Studio
+                  </h3>
+
+                  <p className="mt-4 max-w-md text-sm leading-7 text-white/70">
+                    Premium architectural and engineering
+                    consultancy office serving residential and
+                    commercial projects.
+                  </p>
+                </div>
+              </div>
             </Card>
 
-            {/* MAP */}
-            <Card className="overflow-hidden rounded-[36px] border border-supporting shadow-sm">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18"
-                width="100%"
-                height="500"
-                loading="lazy"
-                className="border-0"
-              />
-            </Card>
-          </div>
-
-          {/* RIGHT SIDE */}
-          <div className="space-y-8">
-            {/* CONTACT CARDS */}
-            <div>
-              <h2 className="mb-6 text-3xl font-black tracking-tight text-primary">
-                Get In Touch
-              </h2>
-
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                {[
-                  {
-                    icon: Phone,
-                    title: "Call Us",
-                    desc: "+91 98765 43210",
-                    sub: "Mon - Sat: 9AM - 6PM",
-                  },
-                  {
-                    icon: Mail,
-                    title: "Email Us",
-                    desc: "info@buildsmart.com",
-                    sub: "Reply within 2 hours",
-                  },
-                  {
-                    icon: MessageCircle,
-                    title: "WhatsApp Support",
-                    desc: "Instantly connect with our team",
-                    sub: "Available 24/7",
-                    span: "sm:col-span-2",
-                  },
-                ].map((item) => {
-                  const Icon = item.icon;
-
-                  return (
-                    <Card
-                      key={item.title}
-                      className={`rounded-[32px] border border-supporting bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${item.span}`}
-                    >
-                      <CardContent className="p-7">
-                        <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
-                          <Icon className="text-accent" />
-                        </div>
-
-                        <h3 className="text-lg font-semibold text-primary">
-                          {item.title}
-                        </h3>
-
-                        <p className="mt-3 text-details">
-                          {item.desc}
-                        </p>
-
-                        <p className="mt-1 text-sm text-details/60">
-                          {item.sub}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* OFFICES */}
-            <div>
-              <h2 className="mb-6 text-3xl font-black tracking-tight text-primary">
-                Our Offices
-              </h2>
-
-              <div className="w-full">
-                    <Card
-                      className="rounded-[32px] border border-supporting bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                    >
-                      <CardContent className="p-6">
-                        <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
-                          <Building2 className="text-accent" />
-                        </div>
-
-                        <h3 className="font-semibold text-primary">
-                          Hyderabad Office
-                        </h3>
-
-                        <p className="mt-3 text-sm leading-6 text-details">
-                          Premium business district office location.
-                        </p>
-
-                        <Button
-                          variant="link"
-                          className="mt-3 p-0 text-accent hover:text-accent/80"
-                        >
-                          View on Map →
-                        </Button>
-                      </CardContent>
-                    </Card>
-              </div>
-            </div>
-
-            {/* CONSULTATION */}
-            <Card className="rounded-[36px] border border-supporting bg-white shadow-sm">
-              <CardContent className="p-8 lg:p-10">
-                <h2 className="text-3xl font-black tracking-tight text-primary">
-                  Book a Free Consultation
-                </h2>
-
-                <p className="mt-3 text-details">
-                  Schedule a meeting with our experts to discuss your
-                  project.
+            <Card className="premium-card rounded-[36px]">
+              <CardContent className="p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
+                  Free Consultation
                 </p>
 
-                <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <h2 className="mt-4 text-3xl font-black tracking-tight text-primary">
+                  Book Your Meeting
+                </h2>
+
+                <p className="mt-3 text-muted-foreground">
+                  Choose your preferred date and consultation
+                  type.
+                </p>
+
+                <div className="mt-8 grid gap-4">
                   <Input
                     type="date"
-                    className="h-14 rounded-2xl border-supporting"
+                    className="h-14 rounded-2xl border-border bg-background"
                   />
 
                   <Input
                     type="time"
-                    className="h-14 rounded-2xl border-supporting"
+                    className="h-14 rounded-2xl border-border bg-background"
                   />
 
                   <Select>
-                    <SelectTrigger className="h-14 rounded-2xl border-supporting">
+                    <SelectTrigger className="h-14 rounded-2xl border-border bg-background">
                       <SelectValue placeholder="Meeting Type" />
                     </SelectTrigger>
 
@@ -326,8 +398,8 @@ export default function ContactPage() {
                   </Select>
                 </div>
 
-                <Button className="mt-6 h-14 w-full rounded-2xl bg-accent text-base font-semibold text-white transition-all duration-300 hover:bg-accent/90">
-                  Book Now
+                <Button className="mt-6 h-14 w-full rounded-2xl bg-primary text-base font-semibold text-white transition-all duration-300 hover:bg-primary/90">
+                  Book Consultation
                 </Button>
               </CardContent>
             </Card>

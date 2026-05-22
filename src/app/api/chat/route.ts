@@ -14,18 +14,14 @@ export async function POST(req: Request) {
 
   try {
 
-    // =========================
     // REQUEST DATA
-    // =========================
 
     const {
       message,
       sessionId
     } = await req.json()
 
-    // =========================
     // AI TOOLS
-    // =========================
 
     // SERVICE RECOMMENDATION
     const recommendedServices =
@@ -43,9 +39,7 @@ export async function POST(req: Request) {
     const leadData =
       extractLead(message)
 
-    // =========================
     // DEBUGGING
-    // =========================
 
     console.log("Detected Intent:")
     console.log(detectedIntent)
@@ -59,9 +53,7 @@ export async function POST(req: Request) {
     console.log("Lead Data:")
     console.log(leadData)
 
-    // =========================
     // SAVE LEAD
-    // =========================
 
     if (leadData.phone) {
 
@@ -89,9 +81,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // =========================
     // FETCH CHAT HISTORY
-    // =========================
 
     const {
       data: previousMessages,
@@ -116,9 +106,7 @@ export async function POST(req: Request) {
       console.log(historyError)
     }
 
-    // =========================
     // BUILD CONVERSATION HISTORY
-    // =========================
 
     const conversationHistory =
 
@@ -133,9 +121,7 @@ export async function POST(req: Request) {
 
         .join("\n")
 
-    // =========================
     // SAVE USER MESSAGE
-    // =========================
 
     await supabase
 
@@ -150,9 +136,7 @@ export async function POST(req: Request) {
         message
       })
 
-    // =========================
     // SYSTEM PROMPT
-    // =========================
 
     const system = buildSystemPrompt({
 
@@ -163,10 +147,7 @@ export async function POST(req: Request) {
       knowledge: knowledgeResults
     })
 
-    // =========================
     // AI GENERATION
-    // =========================
-
     let result
 
     try {
@@ -213,9 +194,6 @@ ${message}
       })
     }
 
-    // =========================
-    // SAVE AI RESPONSE
-    // =========================
 
     await supabase
 
@@ -230,9 +208,6 @@ ${message}
         message: result.text
       })
 
-    // =========================
-    // RETURN RESPONSE
-    // =========================
 
     return Response.json({
 

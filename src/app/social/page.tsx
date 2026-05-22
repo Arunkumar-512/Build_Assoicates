@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { motion, Variants } from "framer-motion";
+
 import {
   Play,
   Heart,
@@ -117,173 +119,235 @@ const trending = [
   },
 ];
 
+const fadeUp:Variants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.08,
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
 export default function SocialPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-supporting text-details">
-      {/* HERO */}
-      <section className="premium-container py-16 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-2">
-          {/* LEFT */}
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-accent">
-              Our Social World
-            </p>
+    <main className="overflow-hidden bg-background text-foreground">
+      <section className="relative min-h-[92vh] overflow-hidden border-b border-border">
+        <div className="absolute inset-0">
+          <Image
+            src="/19.jpg"
+            alt="Social Hero"
+            fill
+            priority
+            className="object-cover scale-105"
+          />
 
-            <h1 className="heading-xl max-w-4xl text-primary">
-              Watch. Learn.
-              <br />
-              Get Inspired.
-              <span className="gradient-text block">
-                From Build to Beautiful.
-              </span>
-            </h1>
+          <div className="absolute inset-0 bg-black/70" />
 
-            <p className="paragraph-lg mt-8 max-w-2xl">
-              Explore real projects, expert tips, site visits,
-              stunning transformations, and modern architectural
-              inspiration through engaging short videos.
-            </p>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-primary/30" />
 
-            {/* STATS */}
-            <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
-              {[
-                {
-                  icon: Play,
-                  value: "2.5M+",
-                  label: "Views",
-                },
-                {
-                  icon: Heart,
-                  value: "125K+",
-                  label: "Likes",
-                },
-                {
-                  icon: MessageCircle,
-                  value: "12K+",
-                  label: "Comments",
-                },
-                {
-                  icon: Share2,
-                  value: "8K+",
-                  label: "Shares",
-                },
-              ].map((item) => {
-                const Icon = item.icon;
+          <div className="absolute left-[-10%] top-[10%] h-[500px] w-[500px] rounded-full bg-accent/20 blur-3xl" />
 
-                return (
-                  <Card
-                    key={item.label}
-                    className="premium-card border-border/50"
+          <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay bg-[url('/noise.png')]" />
+        </div>
+
+        <div className="relative z-20 flex min-h-[92vh] items-center">
+          <div className="premium-container">
+            <div className="grid items-center gap-12 lg:grid-cols-[1fr_380px]">
+              <div className="max-w-4xl">
+                <motion.p
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  custom={1}
+                  className="inline-flex rounded-full border border-white/10 bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-amber-300 backdrop-blur-xl"
+                >
+                  Build Associates Media
+                </motion.p>
+
+                <motion.h1
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  custom={2}
+                  className="mt-7 text-5xl font-black leading-[0.95] tracking-[-0.05em] text-white md:text-7xl xl:text-[92px]"
+                >
+                  Architecture
+                  <br />
+                  Content That
+                  <br />
+                  <span className="text-white/45">
+                    Inspires Millions
+                  </span>
+                </motion.h1>
+
+                <motion.p
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  custom={3}
+                  className="mt-8 max-w-2xl text-lg leading-9 text-white/70"
+                >
+                  Watch luxury homes, site visits, material tests,
+                  modern interiors, and construction knowledge crafted
+                  into premium short-form content.
+                </motion.p>
+
+                <motion.div
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  custom={4}
+                  className="mt-10 flex flex-wrap gap-5"
+                >
+                  <Button className="h-14 rounded-full bg-white px-8 text-sm font-semibold text-primary transition-all duration-500 hover:scale-[1.03] hover:bg-accent hover:text-white">
+                    Explore Videos
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    className="h-14 rounded-full border-white/15 bg-white/5 px-8 text-sm text-white backdrop-blur-xl hover:bg-white hover:text-primary"
                   >
-                    <CardContent className="flex items-center gap-4 p-5">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10">
-                        <Icon className="h-5 w-5 text-accent" />
-                      </div>
+                    Follow Us
+                  </Button>
+                </motion.div>
 
-                      <div>
-                        <h3 className="text-2xl font-black text-primary">
+                <motion.div
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  custom={5}
+                  className="mt-16 grid max-w-3xl grid-cols-2 gap-5 md:grid-cols-4"
+                >
+                  {[
+                    {
+                      icon: Play,
+                      value: "2.5M+",
+                      label: "Views",
+                    },
+                    {
+                      icon: Heart,
+                      value: "125K+",
+                      label: "Likes",
+                    },
+                    {
+                      icon: MessageCircle,
+                      value: "12K+",
+                      label: "Comments",
+                    },
+                    {
+                      icon: Share2,
+                      value: "8K+",
+                      label: "Shares",
+                    },
+                  ].map((item) => {
+                    const Icon = item.icon;
+
+                    return (
+                      <div
+                        key={item.label}
+                        className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
+                      >
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+                          <Icon className="h-5 w-5 text-amber-300" />
+                        </div>
+
+                        <h3 className="mt-5 text-3xl font-black text-white">
                           {item.value}
                         </h3>
 
-                        <p className="text-sm text-details/70">
+                        <p className="mt-1 text-sm text-white/60">
                           {item.label}
                         </p>
                       </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+                    );
+                  })}
+                </motion.div>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 80 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1 }}
+                className="hidden lg:block"
+              >
+                <Card className="overflow-hidden rounded-[36px] border border-white/10 bg-white/10 backdrop-blur-2xl">
+                  <CardContent className="p-7">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-white/60">
+                          Featured Reel
+                        </p>
+
+                        <h3 className="mt-2 text-2xl font-bold text-white">
+                          Modern Villa Tour
+                        </h3>
+                      </div>
+
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
+                        <Play className="fill-white text-white" />
+                      </div>
+                    </div>
+
+                    <div className="relative mt-7 overflow-hidden rounded-[28px]">
+                      <Image
+                        src="/14.jpg"
+                        alt="Featured Reel"
+                        width={500}
+                        height={700}
+                        className="h-[420px] w-full object-cover transition duration-700 hover:scale-105"
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
+
+                      <div className="absolute bottom-0 p-6">
+                        <div className="flex items-center gap-5 text-sm text-white/80">
+                          <div className="flex items-center gap-1">
+                            <Heart className="h-4 w-4" />
+                            12.5K
+                          </div>
+
+                          <div className="flex items-center gap-1">
+                            <Eye className="h-4 w-4" />
+                            240K
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-7 grid grid-cols-2 gap-4">
+                      <button className="flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:text-primary">
+                        <Camera className="h-5 w-5" />
+                        Instagram
+                      </button>
+
+                      <button className="flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:text-primary">
+                        <Tv className="h-5 w-5" />
+                        YouTube
+                      </button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             </div>
           </div>
-
-          {/* RIGHT */}
-          <Card className="premium-card premium-shadow rounded-[36px]">
-            <CardContent className="p-8 lg:p-10">
-              <h2 className="heading-md text-accent">
-                Follow Us
-              </h2>
-
-              <div className="mt-10 space-y-6">
-                {/* INSTAGRAM */}
-                <div className="flex items-center justify-between rounded-[28px] border border-border bg-white/70 p-5 backdrop-blur-xl">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent">
-                      <Camera className="text-white" />
-                    </div>
-
-                    <div>
-                      <h3 className="font-semibold text-primary">
-                        @buildspace.architects
-                      </h3>
-
-                      <p className="text-sm text-details/70">
-                        85K Followers
-                      </p>
-                    </div>
-                  </div>
-
-                  <Button className="rounded-full bg-primary px-6 text-white hover:bg-details">
-                    Follow
-                  </Button>
-                </div>
-
-                {/* YOUTUBE */}
-                <div className="flex items-center justify-between rounded-[28px] border border-border bg-white/70 p-5 backdrop-blur-xl">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary">
-                      <Tv className="text-white" />
-                    </div>
-
-                    <div>
-                      <h3 className="font-semibold text-primary">
-                        BuildSpace Architects
-                      </h3>
-
-                      <p className="text-sm text-details/70">
-                        42K Subscribers
-                      </p>
-                    </div>
-                  </div>
-
-                  <Button className="rounded-full bg-primary px-6 text-white hover:bg-details">
-                    Subscribe
-                  </Button>
-                </div>
-              </div>
-
-              {/* SOCIAL ICONS */}
-              <div className="mt-10 flex flex-wrap gap-4">
-                {[
-                  Camera,
-                  Tv,
-                  Globe,
-                  Share2,
-                  Heart,
-                ].map((Icon, index) => (
-                  <button
-                    key={index}
-                    className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent/10"
-                  >
-                    <Icon className="h-5 w-5 text-primary" />
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
-      {/* CATEGORY FILTER */}
-      <section className="border-y border-border bg-white/70 backdrop-blur-xl">
-        <div className="premium-container flex flex-wrap gap-3 py-6">
+      <section className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-2xl">
+        <div className="premium-container flex flex-wrap gap-3 py-5">
           {categories.map((category, index) => (
             <Button
               key={category}
               variant={index === 0 ? "default" : "outline"}
-              className={`rounded-full px-5 ${
+              className={`rounded-full px-5 py-5 text-xs font-semibold transition-all duration-300 ${
                 index === 0
-                  ? "bg-primary text-white hover:bg-details"
-                  : "border-border bg-white text-primary hover:bg-supporting"
+                  ? "bg-primary text-primary-foreground"
+                  : "border-border bg-card hover:bg-secondary"
               }`}
             >
               {category}
@@ -292,178 +356,258 @@ export default function SocialPage() {
         </div>
       </section>
 
-      {/* SHORT VIDEOS */}
-      <section className="premium-container py-14">
-        <div className="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-6">
-          {shorts.map((video) => (
-            <Card
+      <section className="premium-container py-20">
+        <div className="mb-14 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-accent">
+              Latest Content
+            </p>
+
+            <h2 className="mt-4 text-5xl font-black tracking-[-0.04em] text-primary">
+              Viral Shorts
+            </h2>
+          </div>
+
+          <Button
+            variant="ghost"
+            className="w-fit rounded-full border border-border px-7 py-6 hover:bg-primary hover:text-white"
+          >
+            View All Videos
+          </Button>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {shorts.map((video, i) => (
+            <motion.div
               key={video.title}
-              className="group overflow-hidden rounded-[30px] border border-border/50 bg-white/80 shadow-premium backdrop-blur-xl"
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: i * 0.08,
+              }}
+              viewport={{ once: true }}
             >
-              <div className="relative h-[520px] overflow-hidden">
-                <Image
-                  src={video.image}
-                  alt={video.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+              <Card className="group overflow-hidden rounded-[36px] border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:shadow-premium">
+                <div className="relative h-[640px] overflow-hidden">
+                  <Image
+                    src={video.image}
+                    alt={video.title}
+                    fill
+                    className="object-cover transition duration-[1200ms] group-hover:scale-110"
+                  />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent" />
 
-                <div className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-                  {video.category}
-                </div>
-
-                <div className="absolute right-4 top-4 rounded-full bg-primary/70 px-3 py-1 text-xs text-white backdrop-blur">
-                  {video.duration}
-                </div>
-
-                {/* PLAY BUTTON */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <button className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-xl transition-all duration-300 hover:scale-105">
-                    <Play className="ml-1 h-10 w-10 fill-white text-white" />
-                  </button>
-                </div>
-
-                {/* CONTENT */}
-                <div className="absolute bottom-0 p-5 text-white">
-                  <h3 className="text-2xl font-bold leading-tight">
-                    {video.title}
-                  </h3>
-
-                  <div className="mt-5 flex items-center gap-5 text-sm text-white/90">
-                    <div className="flex items-center gap-1">
-                      <Heart className="h-4 w-4" />
-                      {video.views}
+                  <div className="absolute left-0 right-0 top-0 flex items-center justify-between p-5">
+                    <div className="rounded-full bg-accent px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
+                      {video.category}
                     </div>
 
-                    <div className="flex items-center gap-1">
-                      <MessageCircle className="h-4 w-4" />
-                      {video.likes}
+                    <div className="rounded-full bg-black/40 px-3 py-1 text-xs text-white backdrop-blur">
+                      {video.duration}
                     </div>
+                  </div>
 
-                    <Share2 className="h-4 w-4" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button className="flex h-24 w-24 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-2xl transition-all duration-500 hover:scale-110 hover:bg-white hover:text-primary">
+                      <Play className="ml-1 h-10 w-10 fill-white text-white" />
+                    </button>
+                  </div>
+
+                  <div className="absolute bottom-0 p-7 text-white">
+                    <h3 className="max-w-md text-3xl font-black leading-tight tracking-tight">
+                      {video.title}
+                    </h3>
+
+                    <div className="mt-6 flex items-center gap-6 text-sm text-white/80">
+                      <div className="flex items-center gap-2">
+                        <Heart className="h-4 w-4" />
+                        {video.likes}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <Eye className="h-4 w-4" />
+                        {video.views}
+                      </div>
+
+                      <Share2 className="h-4 w-4" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* TRENDING */}
-      <section className="premium-container pb-16">
-        <Card className="premium-card premium-shadow rounded-[38px]">
-          <CardContent className="p-8 lg:p-10">
-            <div className="mb-10 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Flame className="text-accent" />
+      {/*    TRENDING   */}
+      <section className="premium-container pb-24">
+        <div className="mb-14 flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-3">
+              <Flame className="text-accent" />
 
-                <h2 className="heading-md text-primary">
-                  Trending Now
-                </h2>
-              </div>
-
-              <Button
-                variant="outline"
-                className="rounded-full border-border bg-white"
-              >
-                View All Videos
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-accent">
+                Trending Now
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5">
-              {trending.map((item, index) => (
-                <div
-                  key={item.title}
-                  className="group relative overflow-hidden rounded-[28px]"
-                >
-                  <div className="relative h-[320px]">
+            <h2 className="mt-4 text-5xl font-black tracking-[-0.04em] text-primary">
+              Most Watched
+            </h2>
+          </div>
+
+          <Button
+            variant="outline"
+            className="hidden rounded-full border-border bg-card px-7 py-6 lg:flex"
+          >
+            Explore Trending
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <Card className="group overflow-hidden rounded-[40px] border border-border bg-card">
+            <div className="relative h-[620px] overflow-hidden">
+              <Image
+                src="/9.jpg"
+                alt="Trending"
+                fill
+                className="object-cover transition duration-[1400ms] group-hover:scale-105"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent" />
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button className="flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-2xl transition-all duration-500 hover:scale-105">
+                  <Play className="ml-1 h-12 w-12 fill-white text-white" />
+                </button>
+              </div>
+
+              <div className="absolute bottom-0 p-10 text-white">
+                <div className="rounded-full bg-accent px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white w-fit">
+                  Featured Video
+                </div>
+
+                <h3 className="mt-6 max-w-2xl text-5xl font-black leading-tight tracking-[-0.04em]">
+                  Luxury Home Construction Experience
+                </h3>
+
+                <div className="mt-6 flex items-center gap-6 text-white/80">
+                  <div className="flex items-center gap-2">
+                    <Heart className="h-4 w-4" />
+                    89K Likes
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Eye className="h-4 w-4" />
+                    520K Views
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <div className="space-y-5">
+            {trending.map((item, index) => (
+              <Card
+                key={item.title}
+                className="group overflow-hidden rounded-[30px] border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-premium"
+              >
+                <CardContent className="flex gap-5 p-4">
+                  <div className="relative h-[130px] w-[120px] overflow-hidden rounded-2xl">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover transition duration-700 group-hover:scale-105"
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/20 to-transparent" />
+                    <div className="absolute inset-0 bg-black/20" />
+                  </div>
 
-                    <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-accent font-semibold text-white">
-                      0{index + 1}
-                    </div>
+                  <div className="flex flex-1 flex-col justify-between">
+                    <div>
+                      <div className="mb-3 flex items-center gap-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/10 text-xs font-bold text-accent">
+                          0{index + 1}
+                        </div>
 
-                    <div className="absolute right-4 top-4 rounded-full bg-primary/70 px-3 py-1 text-xs text-white">
-                      {item.duration}
-                    </div>
+                        <span className="text-xs text-muted-foreground">
+                          {item.duration}
+                        </span>
+                      </div>
 
-                    <div className="absolute bottom-0 p-5 text-white">
-                      <h3 className="text-xl font-bold leading-tight">
+                      <h3 className="text-lg font-bold leading-snug text-primary">
                         {item.title}
                       </h3>
+                    </div>
 
-                      <div className="mt-4 flex items-center gap-4 text-sm text-white/90">
-                        <div className="flex items-center gap-1">
-                          <Heart className="h-4 w-4" />
-                          {item.likes}
-                        </div>
+                    <div className="mt-4 flex items-center gap-5 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Heart className="h-4 w-4" />
+                        {item.likes}
+                      </div>
 
-                        <div className="flex items-center gap-1">
-                          <Eye className="h-4 w-4" />
-                          {item.views}
-                        </div>
+                      <div className="flex items-center gap-1">
+                        <Eye className="h-4 w-4" />
+                        {item.views}
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* CTA */}
-      <section className="premium-container pb-24">
-        <Card className="relative overflow-hidden rounded-[40px] border-0 bg-primary text-white shadow-premium">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.25),transparent_40%)]" />
+      <section className="premium-container pb-28">
+        <Card className="relative overflow-hidden rounded-[48px] border border-border bg-primary text-white shadow-[0_30px_100px_rgba(15,23,42,0.25)]">
+          <div className="absolute -right-10 top-0 h-[350px] w-[350px] rounded-full bg-accent/20 blur-3xl" />
 
-          <div className="absolute -right-20 top-0 h-[320px] w-[320px] rounded-full bg-accent/20 blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:50px_50px]" />
 
-          <CardContent className="relative z-10 flex flex-col items-center justify-between gap-8 p-10 text-center lg:flex-row lg:text-left">
-            <div className="flex items-center gap-6">
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white/10 backdrop-blur-xl">
-                <Play className="h-10 w-10 fill-white text-white" />
-              </div>
+          <CardContent className="relative z-10 flex flex-col items-center justify-between gap-10 p-10 text-center lg:flex-row lg:p-16 lg:text-left">
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-300">
+                Join Our Community
+              </p>
 
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-                  New Videos Every Week
-                </p>
+              <h2 className="mt-5 text-5xl font-black leading-tight tracking-[-0.04em]">
+                Daily Architecture
+                <br />
+                Inspiration & Knowledge
+              </h2>
 
-                <h2 className="mt-3 text-4xl font-black leading-tight">
-                  Follow Us & Never Miss an Update
-                </h2>
-
-                <p className="mt-4 max-w-2xl text-slate-300">
-                  Get expert tips, project updates, material
-                  tests, and modern design inspiration delivered
-                  daily.
-                </p>
-              </div>
+              <p className="mt-6 max-w-2xl text-lg leading-9 text-white/60">
+                Follow Build Associates for premium construction
+                content, design inspiration, and practical building
+                knowledge.
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Button className="h-14 rounded-full bg-white px-8 text-primary hover:bg-supporting">
+              <Button className="h-14 rounded-full bg-white px-8 text-primary transition-all duration-300 hover:bg-accent hover:text-white">
                 <Camera className="mr-2 h-5 w-5" />
                 Instagram
               </Button>
 
               <Button
                 variant="outline"
-                className="h-14 rounded-full border-white/20 bg-white/10 px-8 text-white backdrop-blur-xl hover:bg-white hover:text-primary"
+                className="h-14 rounded-full border-white/15 bg-white/10 px-8 text-white backdrop-blur-xl hover:bg-white hover:text-primary"
               >
                 <Tv className="mr-2 h-5 w-5" />
                 YouTube
+              </Button>
+
+              <Button
+                variant="outline"
+                className="h-14 rounded-full border-white/15 bg-white/10 px-8 text-white backdrop-blur-xl hover:bg-white hover:text-primary"
+              >
+                <Globe className="mr-2 h-5 w-5" />
+                Website
               </Button>
             </div>
           </CardContent>

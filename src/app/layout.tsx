@@ -69,55 +69,45 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${jakarta.variable} scroll-smooth`}
     >
-     <body className="relative min-h-screen overflow-x-hidden bg-background font-jakarta text-foreground antialiased selection:bg-accent selection:text-white">
-        {/* =======================================================
-    PREMIUM GLOBAL BACKGROUND - Cinematic Warm Dark
-======================================================= */}
+      <body className="relative min-h-screen overflow-x-hidden bg-background font-jakarta text-foreground antialiased selection:bg-accent selection:text-white">
+        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+          <div className="absolute inset-0 bg-background" />
 
-<div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-  {/* MAIN BACKGROUND */}
-  <div className="absolute inset-0 bg-background" />
+          <div className="absolute left-[-180px] top-[-180px] h-[520px] w-[520px] rounded-full bg-[#8C5A46]/10 blur-[140px]" />
 
-  {/* TOP LEFT WARM CLAY GLOW */}
-  <div className="absolute left-[-140px] top-[-140px] h-[420px] w-[420px] rounded-full bg-[#8C5A46]/12 blur-3xl" />
+          <div className="absolute right-[-180px] top-[5%] h-[520px] w-[520px] rounded-full bg-[#5C4638]/10 blur-[140px]" />
 
-  {/* TOP RIGHT SOFT COCOA GLOW */}
-  <div className="absolute right-[-120px] top-[8%] h-[420px] w-[420px] rounded-full bg-[#4A3A32]/14 blur-3xl" />
+          <div className="absolute left-1/2 top-[35%] h-[620px] w-[620px] -translate-x-1/2 rounded-full bg-[#F3ECE4]/40 blur-[160px] dark:bg-[#F3ECE4]/5" />
 
-  {/* CENTER WARM IVORY GLOW */}
-  <div className="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#F3ECE4]/30 blur-3xl dark:bg-[#F3ECE4]/5" />
+          <div className="absolute bottom-[-180px] left-[0%] h-[480px] w-[480px] rounded-full bg-[#8C5A46]/10 blur-[140px]" />
 
-  {/* BOTTOM LEFT DUSTY CLAY GLOW */}
-  <div className="absolute bottom-[-120px] left-[5%] h-[340px] w-[340px] rounded-full bg-[#8C5A46]/10 blur-3xl" />
+          <div className="absolute bottom-[-180px] right-[0%] h-[520px] w-[520px] rounded-full bg-[#2A2420]/12 blur-[160px]" />
+          
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(24,20,17,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(24,20,17,0.03)_1px,transparent_1px)] bg-[size:90px_90px] dark:bg-[linear-gradient(to_right,rgba(243,236,228,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(243,236,228,0.02)_1px,transparent_1px)]" />
 
-  {/* BOTTOM RIGHT DEEP EARTH GLOW */}
-  <div className="absolute bottom-[-140px] right-[-100px] h-[460px] w-[460px] rounded-full bg-[#2A2420]/16 blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(243,236,228,0.5)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
 
-  {/* SUBTLE PREMIUM GRID */}
-  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(24,20,17,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(24,20,17,0.035)_1px,transparent_1px)] bg-[size:80px_80px] dark:bg-[linear-gradient(to_right,rgba(243,236,228,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(243,236,228,0.03)_1px,transparent_1px)]" />
+          <div className="absolute inset-0 opacity-[0.025] mix-blend-overlay bg-[url('/noise.png')]" />
 
-  {/* CINEMATIC RADIAL FADE */}
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,rgba(243,236,228,0.55)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_35%,rgba(0,0,0,0.55)_100%)]" />
-
-  {/* NOISE TEXTURE */}
-  <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[url('/noise.png')]" />
-</div>
-
-        {/* =======================================================
-            APP LAYOUT
-        ======================================================= */}
+          <div className="absolute left-0 top-[20%] h-px w-full bg-gradient-to-r from-transparent via-[#8C5A46]/10 to-transparent" />
+          <div className="absolute left-0 top-[60%] h-px w-full bg-gradient-to-r from-transparent via-[#8C5A46]/10 to-transparent" />
+        </div>
 
         <main className="relative flex min-h-screen flex-col">
-          {/* NAVBAR */}
           <Navbar />
 
-          {/* PAGE CONTENT */}
           <section className="relative flex-1">
-            {children}
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-background/60 to-transparent" />
+
+            <div className="relative z-20">
+              {children}
+            </div>
+
             <FloatingWhatsApp />
             <FloatingChat />
-
           </section>
+
+          <div className="pointer-events-none absolute bottom-0 left-1/2 h-[260px] w-[80%] -translate-x-1/2 rounded-full bg-[#8C5A46]/5 blur-3xl" />
         </main>
       </body>
     </html>

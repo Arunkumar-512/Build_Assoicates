@@ -19,9 +19,7 @@ type Message = {
 
 export default function FloatingChat() {
 
-  // =========================
-  // STATE
-  // =========================
+ 
 
   const [open, setOpen] =
     useState(false)
@@ -45,9 +43,7 @@ export default function FloatingChat() {
   const [sessionId] =
     useState(uuidv4())
 
-  // =========================
-  // AUTO SCROLL
-  // =========================
+  
 
   const messagesEndRef =
     useRef<HTMLDivElement>(null)
@@ -62,9 +58,7 @@ export default function FloatingChat() {
 
   }, [messages])
 
-  // =========================
-  // QUICK ACTIONS
-  // =========================
+  
 
   const quickActions = [
 
@@ -81,10 +75,7 @@ export default function FloatingChat() {
     "Book Consultation"
   ]
 
-  // =========================
-  // SEND MESSAGE
-  // =========================
-
+  
   async function handleSend(
     e?: React.FormEvent
   ) {
@@ -190,9 +181,8 @@ export default function FloatingChat() {
     }
   }
 
-  // =========================
-  // ENTER SUPPORT
-  // =========================
+  
+    
 
   function handleKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>
@@ -209,14 +199,10 @@ export default function FloatingChat() {
     }
   }
 
-  // =========================
-  // UI
-  // =========================
-
+  
   return (
 
     <>
-      {/* FLOATING BUTTON */}
       <button
 
         onClick={() =>
