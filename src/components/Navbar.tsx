@@ -136,7 +136,7 @@ export default function Navbar() {
             );
           })}
 
-          <Button className="mt-4 h-12 w-full rounded-xl bg-accent text-accent-foreground">
+          <Button className="mt-4 h-12 w-full rounded-xl bg-accent text-accent-foreground" onClick={() => setIsOpen(false)}>
             Get Consultation
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
