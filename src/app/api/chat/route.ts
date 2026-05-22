@@ -8,7 +8,7 @@ import { supabase } from "@/lib/supabase"
 
 import { google } from "@ai-sdk/google"
 
-import { streamText } from "ai"
+import { generateText } from "ai"
 
 export async function POST(req: Request) {
 
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     console.log(leadData)
 
     // =========================
-    // SAVE LEAD TO DATABASE
+    // SAVE LEAD
     // =========================
 
     if (leadData.phone) {
@@ -90,24 +90,7 @@ export async function POST(req: Request) {
     }
 
     // =========================
-    // SAVE USER MESSAGE
-    // =========================
-
-    await supabase
-
-      .from("chat_history")
-
-      .insert({
-
-        session_id: sessionId,
-
-        role: "user",
-
-        message
-      })
-
-    // =========================
-    // FETCH MEMORY
+    // FETCH CHAT HISTORY
     // =========================
 
     const {
@@ -151,6 +134,23 @@ export async function POST(req: Request) {
         .join("\n")
 
     // =========================
+    // SAVE USER MESSAGE
+    // =========================
+
+    await supabase
+
+      .from("chat_history")
+
+      .insert({
+
+        session_id: sessionId,
+
+        role: "user",
+
+        message
+      })
+
+    // =========================
     // SYSTEM PROMPT
     // =========================
 
@@ -164,20 +164,6 @@ export async function POST(req: Request) {
     })
 
     // =========================
-    // USER PROMPT
-    // =========================
-
-    const prompt = `
-
-Conversation History:
-${conversationHistory}
-
-Current User Message:
-${message}
-
-`
-
-    // =========================
     // AI GENERATION
     // =========================
 
@@ -186,13 +172,21 @@ ${message}
     try {
 
       // PRIMARY MODEL
-      result = streamText({
+      result = await generateText({
 
         model: google("gemini-2.5-flash"),
 
         system,
 
-        prompt
+        prompt: `
+
+Conversation History:
+${conversationHistory}
+
+Current User Message:
+${message}
+
+`
       })
 
     } catch (primaryError) {
@@ -201,21 +195,49 @@ ${message}
       console.log(primaryError)
 
       // FALLBACK MODEL
-      result = streamText({
+      result = await generateText({
 
         model: google("gemini-2.0-flash"),
 
         system,
 
-        prompt
+        prompt: `
+
+Conversation History:
+${conversationHistory}
+
+Current User Message:
+${message}
+
+`
       })
     }
 
     // =========================
-    // RETURN STREAM RESPONSE
+    // SAVE AI RESPONSE
     // =========================
 
-    return result.toTextStreamResponse()
+    await supabase
+
+      .from("chat_history")
+
+      .insert({
+
+        session_id: sessionId,
+
+        role: "assistant",
+
+        message: result.text
+      })
+
+    // =========================
+    // RETURN RESPONSE
+    // =========================
+
+    return Response.json({
+
+      reply: result.text
+    })
 
   } catch (error) {
 
