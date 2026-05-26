@@ -47,7 +47,7 @@ export default function HomePage() {
 
         <div className="absolute inset-0">
           <Image
-            src="/15.jpg"
+            src="/images/15.jpg"
             alt="Luxury Villa"
             fill
             priority
@@ -60,7 +60,7 @@ export default function HomePage() {
 
           <div className="absolute left-[-10%] top-[20%] h-[500px] w-[500px] rounded-full bg-amber-400/10 blur-3xl" />
 
-          <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay bg-[url('/noise.png')]" />
+          <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay bg-[url('/images/28.png')]" />
         </div>
 
         <motion.div
@@ -87,7 +87,7 @@ export default function HomePage() {
 
           <div className="mt-6 overflow-hidden rounded-2xl">
             <Image
-              src="/13.jpg"
+              src="/images/13.jpg"
               alt="Villa"
               width={500}
               height={400}
@@ -204,7 +204,7 @@ export default function HomePage() {
             className="relative overflow-hidden rounded-[40px]"
           >
             <Image
-              src="/2.jpg"
+              src="/images/2.jpg"
               alt="Architecture"
               width={1000}
               height={1200}
@@ -311,7 +311,7 @@ export default function HomePage() {
 
         <div className="grid gap-7 lg:grid-cols-3">
 
-          {["12.jpg", "13.jpg", "14.jpg"].map((img, i) => (
+          {["images/12.jpg", "images/13.jpg", "images/14.jpg"].map((img, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 80 }}
@@ -436,7 +436,7 @@ export default function HomePage() {
 
                   <div className="flex items-center gap-4">
                     <Avatar className="h-16 w-16 border border-black/5">
-                      <AvatarImage src="/profile.jpg" />
+                      <AvatarImage src="/images/icon6.png" />
                       <AvatarFallback>BA</AvatarFallback>
                     </Avatar>
 

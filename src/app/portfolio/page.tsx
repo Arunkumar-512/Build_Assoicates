@@ -34,56 +34,56 @@ const projects = [
     type: "Villas",
     location: "Bangalore",
     size: "5,800 Sq.ft",
-    image: "/9.jpg",
+    image: "/images/9.jpg",
   },
   {
     title: "Harmony Duplex",
     type: "Duplex",
     location: "Hyderabad",
     size: "3,200 Sq.ft",
-    image: "/10.jpg",
+    image: "/images/10.jpg",
   },
   {
     title: "Urban Oasis",
     type: "Residential",
     location: "Chennai",
     size: "4,100 Sq.ft",
-    image: "/11.jpg",
+    image: "/images/11.jpg",
   },
   {
     title: "Summit Business Park",
     type: "Commercial",
     location: "Pune",
     size: "25,000 Sq.ft",
-    image: "/12.jpg",
+    image: "/images/12.jpg",
   },
   {
     title: "Luxury Living",
     type: "Interiors",
     location: "Mumbai",
     size: "2,600 Sq.ft",
-    image: "/13.jpg",
+    image: "/images/13.jpg",
   },
   {
     title: "TechPark Structure",
     type: "Structures",
     location: "Bangalore",
     size: "18,000 Sq.ft",
-    image: "/14.jpg",
+    image: "/images/14.jpg",
   },
   {
     title: "Hilltop Residence",
     type: "3D Models",
     location: "Coorg",
     size: "4,500 Sq.ft",
-    image: "/15.jpg",
+    image: "/images/15.jpg",
   },
   {
     title: "Palm Residency",
     type: "Residential",
     location: "Kerala",
     size: "3,900 Sq.ft",
-    image: "/19.jpg",
+    image: "/images/19.jpg",
   },
 ];
 
@@ -122,7 +122,7 @@ export default function PortfolioPage() {
         <div className="absolute inset-0">
 
           <Image
-            src="/19.jpg"
+            src="/images/19.jpg"
             alt="Portfolio Hero"
             fill
             priority
@@ -252,7 +252,7 @@ export default function PortfolioPage() {
                   <div className="relative overflow-hidden rounded-[28px]">
 
                     <Image
-                      src="/13.jpg"
+                      src="/images/13.jpg"
                       alt="Featured"
                       width={700}
                       height={900}
@@ -486,7 +486,7 @@ export default function PortfolioPage() {
                 <div className="relative">
 
                   <Image
-                    src="/14.jpg"
+                    src="/images/14.jpg"
                     alt="Case Study"
                     width={1200}
                     height={700}

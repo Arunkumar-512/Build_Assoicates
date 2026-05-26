@@ -111,7 +111,7 @@ export default function ServicesPage() {
         {/* BG */}
      <div className="absolute inset-0">
   <Image
-    src="/26.png"
+    src="/images/26.png"
     alt="Architecture"
     fill
     priority
@@ -468,7 +468,7 @@ export default function ServicesPage() {
                     alt="Planning"
                     width={1200}
                     height={600}
-                    className="h-[260px] w-full object-cover"
+                    className="h-full w-full object-cover"
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
