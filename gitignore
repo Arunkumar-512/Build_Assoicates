@@ -1,0 +1,52 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next
+/out
+
+# production
+/build
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# macOS
+.DS_Store
+
+# windows
+Thumbs.db
+
+# vscode
+.vscode/
+
+# coverage
+/coverage
+
+# typescript
+*.tsbuildinfo
+
+# videos
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# optional: ignore entire videos folder
+public/videos/
+
+# vercel
+.vercel
+
+# misc
+*.pem

@@ -171,7 +171,7 @@ export async function POST(req: Request) {
 
       system,
 
-      maxTokens: 120,
+      // maxTokens: 120,
 
       messages: [
 
