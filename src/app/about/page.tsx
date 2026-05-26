@@ -16,6 +16,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 const stats = [
   {
@@ -86,6 +87,7 @@ const fadeUp :Variants = {
 };
 
 export default function AboutPage() {
+  const router  = useRouter();
   return (
     <main className="overflow-hidden bg-[#f7f7f5] text-[#111111]">
 
@@ -93,7 +95,7 @@ export default function AboutPage() {
 
         <div className="absolute inset-0">
           <Image
-            src="/26.png"
+            src="/images/26.png"
             alt="About Build Associates"
             fill
             priority
@@ -106,7 +108,7 @@ export default function AboutPage() {
 
           <div className="absolute left-[-10%] top-[10%] h-[500px] w-[500px] rounded-full bg-amber-300/10 blur-3xl" />
 
-          <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay bg-[url('/noise.png')]" />
+          {/* <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay bg-[url('/noise.png')]" /> */}
         </div>
 
         {/* FLOATING CARD */}
@@ -134,7 +136,7 @@ export default function AboutPage() {
 
           <div className="mt-6 overflow-hidden rounded-2xl">
             <Image
-              src="/25.png"
+              src="/images/25.png"
               alt="Office"
               width={500}
               height={400}
@@ -193,14 +195,17 @@ export default function AboutPage() {
                 custom={4}
                 className="mt-10 flex flex-wrap gap-5"
               >
-                <Button className="h-14 rounded-full bg-white px-8 text-sm font-semibold text-black transition-all duration-500 hover:scale-[1.04] hover:bg-amber-300">
+                <Button 
+                  onClick={()=>router.push("/portfolio")}
+                  className="h-14 rounded-full bg-white px-8 text-sm font-semibold text-black transition-all duration-500 hover:scale-[1.04] hover:bg-amber-300 cursor-pointer">
                   Explore Projects
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
 
                 <Button
                   variant="outline"
-                  className="h-14 rounded-full border-white/20 bg-white/5 px-8 text-sm text-white backdrop-blur-xl hover:bg-white/10"
+                  className="h-14 rounded-full border-white/20 bg-white/5 px-8 text-sm text-white backdrop-blur-xl hover:bg-white/10 hover:text-amber-400 cursor-pointer"
+                  onClick={()=>router.push("/contact")}
                 >
                   Contact Us
                 </Button>
@@ -229,7 +234,7 @@ export default function AboutPage() {
 
             <div className="relative overflow-hidden rounded-[42px]">
               <Image
-                src="/25.png"
+                src="/images/25.png"
                 alt="Office"
                 width={1200}
                 height={900}
@@ -443,13 +448,11 @@ export default function AboutPage() {
 
             <div className="flex flex-wrap gap-4">
 
-              <Button className="h-14 rounded-full bg-white px-8 text-sm font-semibold text-black transition-all duration-500 hover:scale-105 hover:bg-amber-300">
-                Get Consultation
-              </Button>
-
+             
               <Button
                 variant="outline"
-                className="h-14 rounded-full border-white/20 bg-white/5 px-8 text-sm text-white backdrop-blur-xl hover:bg-white hover:text-black"
+                className="h-14 rounded-full border-white/20 bg-white/5 px-8 text-sm text-white backdrop-blur-xl hover:bg-white hover:text-amber-400 cursor-pointer"
+                onClick={()=>router.push("/portfolio")}
               >
                 View Portfolio
               </Button>

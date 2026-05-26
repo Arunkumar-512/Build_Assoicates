@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
+import { useState } from "react";
 
 import {
   ArrowRight,
@@ -14,6 +15,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 const categories = [
   "All Projects",
@@ -29,7 +31,7 @@ const categories = [
 const projects = [
   {
     title: "Serenity Villa",
-    type: "Villa",
+    type: "Villas",
     location: "Bangalore",
     size: "5,800 Sq.ft",
     image: "/9.jpg",
@@ -64,21 +66,28 @@ const projects = [
   },
   {
     title: "TechPark Structure",
-    type: "Structure",
+    type: "Structures",
     location: "Bangalore",
     size: "18,000 Sq.ft",
     image: "/14.jpg",
   },
   {
     title: "Hilltop Residence",
-    type: "3D Model",
+    type: "3D Models",
     location: "Coorg",
     size: "4,500 Sq.ft",
     image: "/15.jpg",
   },
+  {
+    title: "Palm Residency",
+    type: "Residential",
+    location: "Kerala",
+    size: "3,900 Sq.ft",
+    image: "/19.jpg",
+  },
 ];
 
-const fadeUp:Variants= {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: (i = 1) => ({
     opacity: 1,
@@ -92,31 +101,51 @@ const fadeUp:Variants= {
 };
 
 export default function PortfolioPage() {
+  const router = useRouter();
+
+  const [selectedCategory, setSelectedCategory] =
+    useState("All Projects");
+
+  const filteredProjects =
+    selectedCategory === "All Projects"
+      ? projects
+      : projects.filter(
+        (project) => project.type === selectedCategory
+      );
+
   return (
     <main className="min-h-screen overflow-hidden bg-background text-foreground">
 
       <section className="relative min-h-screen overflow-hidden border-b border-border">
 
+        {/* BACKGROUND */}
         <div className="absolute inset-0">
+
           <Image
             src="/19.jpg"
             alt="Portfolio Hero"
             fill
             priority
-            className="object-cover object-center scale-105"
+            className="object-cover object-center"
           />
 
-  <div className="absolute inset-0 bg-primary/25" />
-  <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-background/20 to-transparent" />
+          {/* CLEAN PREMIUM OVERLAY */}
+          <div className="absolute inset-0 bg-black/20" />
 
-  <div className="absolute left-[-120px] top-[-120px] h-[420px] w-[420px] rounded-full bg-accent/10 blur-3xl" />
-  <div className="absolute bottom-[-120px] right-[-120px] h-[320px] w-[320px] rounded-full bg-accent/5 blur-3xl" />
+          {/* SOFT LUXURY GRADIENT */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
+
+          {/* SUBTLE LIGHT */}
+          <div className="absolute left-0 top-0 h-[500px] w-[500px] bg-amber-300/10 blur-3xl" />
+
         </div>
+
         <div className="relative z-20 flex min-h-screen items-center">
           <div className="premium-container">
 
-            <div className="grid items-end gap-14 lg:grid-cols-[1fr_400px]">
+            <div className="grid items-center gap-14 lg:grid-cols-[1fr_420px]">
 
+              {/* LEFT CONTENT */}
               <div className="max-w-5xl">
 
                 <motion.p
@@ -124,7 +153,7 @@ export default function PortfolioPage() {
                   initial="hidden"
                   animate="visible"
                   custom={1}
-                  className="inline-flex rounded-full border border-accent/20 bg-accent/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-amber-300/78 backdrop-blur-xl"
+                  className="inline-flex rounded-full border border-white/15 bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-white backdrop-blur-xl"
                 >
                   Signature Portfolio
                 </motion.p>
@@ -134,13 +163,14 @@ export default function PortfolioPage() {
                   initial="hidden"
                   animate="visible"
                   custom={2}
-                  className="mt-8 text-5xl font-black leading-[0.95] tracking-[-0.05em] text-primary md:text-7xl xl:text-[92px]"
+                  className="mt-8 text-5xl font-black leading-[0.95] tracking-[-0.05em] text-white md:text-7xl xl:text-[92px]"
                 >
                   Spaces That
                   <br />
                   Define Modern
                   <br />
-                  <span className="text-white/78 ">
+
+                  <span className="text-white/70">
                     Luxury Living
                   </span>
                 </motion.h1>
@@ -150,13 +180,14 @@ export default function PortfolioPage() {
                   initial="hidden"
                   animate="visible"
                   custom={3}
-                  className="mt-8 max-w-2xl text-lg leading-9 text-white/90 "
+                  className="mt-8 max-w-2xl text-lg leading-9 text-white/75"
                 >
                   Explore premium architecture, interiors,
                   commercial spaces and structural innovations
                   crafted with timeless aesthetics and modern precision.
                 </motion.p>
 
+                {/* BUTTONS */}
                 <motion.div
                   variants={fadeUp}
                   initial="hidden"
@@ -164,25 +195,30 @@ export default function PortfolioPage() {
                   custom={4}
                   className="mt-10 flex flex-wrap gap-5"
                 >
-                  <Button className="primary-button h-14 px-8 text-sm font-semibold">
+
+                  <Button
+                    className="h-14 rounded-full bg-white px-8 text-sm font-semibold text-black transition-all duration-500 hover:scale-[1.03] hover:bg-amber-300  cursor-pointer"
+                  >
                     Explore Projects
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
 
                   <Button
                     variant="outline"
-                    className="secondary-button h-14 px-8 text-sm"
+                    className="h-14 rounded-full border border-white/20 bg-white/5 px-8 text-sm font-medium text-white backdrop-blur-xl transition-all duration-500 hover:bg-white/10 hover:text-amber-400 cursor-pointer"
                   >
                     Watch Showcase
                   </Button>
+
                 </motion.div>
 
+                {/* STATS */}
                 <motion.div
                   variants={fadeUp}
                   initial="hidden"
                   animate="visible"
                   custom={5}
-                  className="mt-16 grid max-w-3xl grid-cols-3 gap-8 border-t border-border pt-8"
+                  className="mt-16 grid max-w-3xl grid-cols-3 gap-8 border-t border-white/10 pt-8"
                 >
                   {[
                     ["350+", "Projects"],
@@ -190,11 +226,11 @@ export default function PortfolioPage() {
                     ["5.2M+", "Sq.ft Designed"],
                   ].map((item, index) => (
                     <div key={index}>
-                      <h3 className="text-4xl font-black text-primary/80">
+                      <h3 className="text-4xl font-black text-white">
                         {item[0]}
                       </h3>
 
-                      <p className="mt-2 text-sm text-white/90 ">
+                      <p className="mt-2 text-sm text-white/60">
                         {item[1]}
                       </p>
                     </div>
@@ -203,15 +239,18 @@ export default function PortfolioPage() {
 
               </div>
 
+              {/* RIGHT CARD */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1 }}
                 className="hidden lg:block"
               >
-                <div className="premium-card overflow-hidden p-5">
 
-                  <div className="relative overflow-hidden rounded-[32px]">
+                <div className="overflow-hidden rounded-[36px] border border-white/10 bg-white/10 p-4 backdrop-blur-2xl">
+
+                  <div className="relative overflow-hidden rounded-[28px]">
+
                     <Image
                       src="/13.jpg"
                       alt="Featured"
@@ -220,10 +259,11 @@ export default function PortfolioPage() {
                       className="h-[520px] w-full object-cover transition duration-[1400ms] hover:scale-105"
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                     <div className="absolute bottom-0 left-0 right-0 p-7">
-                      <p className="text-xs uppercase tracking-[0.3em] text-accent">
+
+                      <p className="text-xs uppercase tracking-[0.3em] text-amber-300">
                         Featured Project
                       </p>
 
@@ -235,31 +275,34 @@ export default function PortfolioPage() {
                         Elegant interior architecture designed for
                         modern premium lifestyles.
                       </p>
+
                     </div>
+
                   </div>
 
                 </div>
+
               </motion.div>
 
             </div>
           </div>
         </div>
       </section>
-
+      {/* CATEGORY FILTER */}
       <section className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-2xl">
         <div className="premium-container py-5">
 
           <div className="flex flex-wrap items-center gap-3">
 
-            {categories.map((item, index) => (
+            {categories.map((item) => (
               <Button
                 key={item}
                 variant="outline"
-                className={`h-11 rounded-full px-5 text-xs font-semibold tracking-wide transition-all duration-300 ${
-                  index === 0
+                onClick={() => setSelectedCategory(item)}
+                className={`h-11 rounded-full px-5 text-xs font-semibold tracking-wide transition-all duration-300 ${selectedCategory === item
                     ? "border-accent bg-primary text-accent hover:bg-acce"
                     : "border-border bg-card hover:border-accent/30 hover:bg-secondary"
-                }`}
+                  }`}
               >
                 {item}
               </Button>
@@ -269,6 +312,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
+      {/* PROJECTS SECTION */}
       <section className="premium-container py-24">
 
         <div className="mb-16 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -286,16 +330,11 @@ export default function PortfolioPage() {
             </h2>
           </div>
 
-          {/* <p className="max-w-xl text-base leading-8 text-muted-foreground">
-            Every project blends functionality, aesthetics and
-            engineering excellence to create unforgettable spaces.
-          </p> */}
-
         </div>
 
         <div className="grid auto-rows-[240px] gap-7 md:grid-cols-2 xl:grid-cols-4">
 
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <motion.div
               key={project.title}
               variants={fadeUp}
@@ -303,13 +342,12 @@ export default function PortfolioPage() {
               whileInView="visible"
               viewport={{ once: true }}
               custom={index}
-              className={`group relative overflow-hidden rounded-[36px] ${
-                index === 0
+              className={`group relative overflow-hidden rounded-[36px] ${index === 0
                   ? "md:col-span-2 md:row-span-2"
                   : index === 3
-                  ? "xl:row-span-2"
-                  : "row-span-1"
-              }`}
+                    ? "xl:row-span-2"
+                    : "row-span-1"
+                }`}
             >
 
               <Image
@@ -362,6 +400,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
+      {/* THIS SECTION REMAINS EXACTLY SAME */}
       <section className="relative overflow-hidden py-28">
 
         <div className="absolute inset-0 bg-card/40" />
@@ -372,25 +411,22 @@ export default function PortfolioPage() {
 
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
 
-            {/* VIDEO */}
             <Card className="premium-card overflow-hidden">
 
               <div className="relative h-full min-h-[580px] overflow-hidden">
-
-                <Image
-                  src="/9.jpg"
-                  alt="Modern Farmhouse"
-                  fill
-                  className="object-cover transition duration-[1400ms] hover:scale-105"
-                />
-
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 h-full w-full object-cover"
+                >
+                  <source src="/videos/video1.mp4" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent" />
 
                 <div className="absolute inset-0 flex flex-col justify-end p-10 text-white">
 
-                  <button className="mb-8 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-xl transition-all duration-500 hover:scale-110">
-                    <Play className="h-7 w-7 fill-white text-white" />
-                  </button>
 
                   <p className="text-xs uppercase tracking-[0.35em] text-accent">
                     Project Walkthrough

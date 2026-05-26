@@ -9,12 +9,22 @@ import {
 } from "lucide-react";
 
 export default async function LeadsPage() {
-  const { data: leads } = await supabase
-    .from("leads")
-    .select("*")
-    .order("created_at", {
-      ascending: false,
-    });
+  const {
+  data: leads,
+  error,
+} = await supabase
+
+  .from("leads")
+
+  .select("*")
+
+  .order("created_at", {
+    ascending: false,
+  });
+
+console.log("LEADS DATA:", leads);
+
+console.log("LEADS ERROR:", error);
 
   const totalLeads = leads?.length || 0;
 

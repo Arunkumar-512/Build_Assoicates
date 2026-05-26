@@ -99,7 +99,7 @@ export default function LoginPage() {
         <div className="relative hidden overflow-hidden lg:block">
           <div className="absolute inset-0">
             <Image
-              src="/28.png"
+              src="/images/28.png"
               alt="Build Associates"
               fill
               priority

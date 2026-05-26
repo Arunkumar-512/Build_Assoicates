@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+
 import { v4 as uuidv4 } from "uuid"
+
 import ReactMarkdown from "react-markdown"
 
 type Message = {
@@ -12,26 +14,40 @@ type Message = {
 
 export default function Chatbot() {
 
- 
+  // =========================
+  // STATE
+  // =========================
+
   const [input, setInput] = useState("")
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] =
+    useState(false)
 
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: crypto.randomUUID(),
-      role: "assistant",
-      content:
-        "Hello 👋\nHow can Build Associates help you today?"
-    }
-  ])
+  const [messages, setMessages] =
+    useState<Message[]>([
+      {
+        id: crypto.randomUUID(),
 
-  const [sessionId] = useState(uuidv4())
+        role: "assistant",
 
+        content:
+          "Hello 👋\nHow can Build Associates help you today?"
+      }
+    ])
 
+  const [sessionId] =
+    useState(uuidv4())
+
+  // =========================
+  // REFS
+  // =========================
 
   const messagesEndRef =
     useRef<HTMLDivElement>(null)
+
+  // =========================
+  // AUTO SCROLL
+  // =========================
 
   useEffect(() => {
 
@@ -43,7 +59,9 @@ export default function Chatbot() {
 
   }, [messages])
 
-
+  // =========================
+  // SUGGESTIONS
+  // =========================
 
   const suggestions = [
 
@@ -60,7 +78,10 @@ export default function Chatbot() {
     "Modular kitchen ideas"
   ]
 
-  
+  // =========================
+  // SEND MESSAGE
+  // =========================
+
   async function handleSend(
     e?: React.FormEvent
   ) {
@@ -73,7 +94,10 @@ export default function Chatbot() {
 
       setLoading(true)
 
+      // =========================
       // USER MESSAGE
+      // =========================
+
       const userMessage: Message = {
 
         id: crypto.randomUUID(),
@@ -84,6 +108,7 @@ export default function Chatbot() {
       }
 
       // ADD USER MESSAGE
+
       setMessages(prev => [
 
         ...prev,
@@ -95,24 +120,54 @@ export default function Chatbot() {
 
       setInput("")
 
+      // =========================
+      // EMPTY ASSISTANT MESSAGE
+      // =========================
+
+      const assistantId =
+        crypto.randomUUID()
+
+      setMessages(prev => [
+
+        ...prev,
+
+        {
+          id: assistantId,
+
+          role: "assistant",
+
+          content: ""
+        }
+      ])
+
+      // =========================
       // API CALL
-      const response = await fetch("/api/chat", {
+      // =========================
 
-        method: "POST",
+      const response = await fetch(
+        "/api/chat-stream",
+        {
 
-        headers: {
-          "Content-Type": "application/json"
-        },
+          method: "POST",
 
-        body: JSON.stringify({
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-          message: currentInput,
+          body: JSON.stringify({
 
-          sessionId
-        })
-      })
+            message: currentInput,
 
+            sessionId
+          })
+        }
+      )
+
+      // =========================
       // ERROR HANDLING
+      // =========================
+
       if (!response.ok) {
 
         throw new Error(
@@ -120,27 +175,78 @@ export default function Chatbot() {
         )
       }
 
-      // JSON RESPONSE
-      const data =
-        await response.json()
+      if (!response.body) {
 
-      // ASSISTANT MESSAGE
-      const assistantMessage: Message = {
-
-        id: crypto.randomUUID(),
-
-        role: "assistant",
-
-        content: data.reply
+        throw new Error(
+          "No response body"
+        )
       }
 
-      // ADD ASSISTANT MESSAGE
-      setMessages(prev => [
+      // =========================
+      // STREAM READER
+      // =========================
 
-        ...prev,
+      const reader =
+        response.body.getReader()
 
-        assistantMessage
-      ])
+      const decoder =
+        new TextDecoder()
+
+      let fullText = ""
+
+      // =========================
+      // READ STREAM
+      // =========================
+
+      while (true) {
+
+        const { done, value } =
+          await reader.read()
+
+        if (done) break
+
+        const chunk =
+          decoder.decode(value)
+
+        fullText += chunk
+
+        // UPDATE STREAMED MESSAGE
+
+        setMessages(prev =>
+
+          prev.map(msg =>
+
+            msg.id === assistantId
+
+              ? {
+                  ...msg,
+
+                  content:
+                    fullText + "▋"
+                }
+
+              : msg
+          )
+        )
+      }
+
+      // REMOVE CURSOR AFTER STREAM ENDS
+
+      setMessages(prev =>
+
+        prev.map(msg =>
+
+          msg.id === assistantId
+
+            ? {
+                ...msg,
+
+                content: fullText
+              }
+
+            : msg
+        )
+      )
 
     } catch (error) {
 
@@ -166,7 +272,9 @@ export default function Chatbot() {
     }
   }
 
-    
+  // =========================
+  // ENTER KEY
+  // =========================
 
   function handleKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>
@@ -183,11 +291,18 @@ export default function Chatbot() {
     }
   }
 
+  // =========================
+  // UI
+  // =========================
+
   return (
 
     <div className="w-full max-w-3xl mx-auto">
 
-      {/* SUGGESTIONS */}
+      {/* =========================
+          SUGGESTIONS
+      ========================= */}
+
       <div className="flex flex-wrap gap-2 mb-4">
 
         {suggestions.map((question) => (
@@ -218,7 +333,10 @@ export default function Chatbot() {
 
       </div>
 
-      {/* CHAT CONTAINER */}
+      {/* =========================
+          CHAT CONTAINER
+      ========================= */}
+
       <div
         className="
           h-[650px]
@@ -233,7 +351,10 @@ export default function Chatbot() {
 
         <div className="space-y-6">
 
-          {/* MESSAGES */}
+          {/* =========================
+              MESSAGES
+          ========================= */}
+
           {messages.map((message) => (
 
             <div
@@ -288,46 +409,23 @@ export default function Chatbot() {
             </div>
           ))}
 
-          {/* THINKING */}
+          {/* =========================
+              LOADING
+          ========================= */}
+
           {loading && (
 
             <div className="flex justify-start">
 
               <div
                 className="
-                  bg-gray-100
-                  px-4
-                  py-3
-                  rounded-2xl
-                  text-sm
+                  text-xs
+                  text-gray-500
                 "
               >
 
-                <div className="flex gap-1">
-
-                  <span className="animate-bounce">
-                    •
-                  </span>
-
-                  <span
-                    className="
-                      animate-bounce
-                      delay-100
-                    "
-                  >
-                    •
-                  </span>
-
-                  <span
-                    className="
-                      animate-bounce
-                      delay-200
-                    "
-                  >
-                    •
-                  </span>
-
-                </div>
+                Build Associates AI
+                is analyzing your project...
 
               </div>
 
@@ -340,7 +438,10 @@ export default function Chatbot() {
 
       </div>
 
-      {/* INPUT */}
+      {/* =========================
+          INPUT
+      ========================= */}
+
       <form
 
         onSubmit={handleSend}

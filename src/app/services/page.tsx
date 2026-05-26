@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 import {
   ArrowRight,
@@ -25,63 +26,63 @@ const services = [
     title: "House Plans",
     description:
       "Custom house plans tailored to your lifestyle, space and future needs.",
-    image: "/1.jpg",
+    image: "/images/1.jpg",
     icon: Home,
   },
   {
     title: "Interior Design",
     description:
       "Elegant and functional interiors that reflect your personality and comfort.",
-    image: "/7.jpg",
+    image: "/images/7.jpg",
     icon: PencilRuler,
   },
   {
     title: "Elevations",
     description:
       "Stunning elevation designs that enhance aesthetics and add value.",
-    image: "/6.jpg",
+    image: "/images/6.jpg",
     icon: Building2,
   },
   {
     title: "Structural Design",
     description:
       "Safe, efficient and sustainable structural solutions for every type of building.",
-    image: "/24.jpg",
+    image: "/images/24.jpg",
     icon: Ruler,
   },
   {
     title: "Material Testing",
     description:
       "Advanced testing to ensure quality, durability and safety of materials.",
-    image: "/4.jpg",
+    image: "/images/4.jpg",
     icon: ShieldCheck,
   },
   {
     title: "Cost Saving Consultation",
     description:
       "Smart strategies and expert advice to optimize costs without compromising quality.",
-    image: "/3.jpg",
+    image: "/images/3.jpg",
     icon: ClipboardList,
   },
   {
     title: "Site Planning",
     description:
       "Efficient site layouts for better space utilization and smooth project execution.",
-    image: "/8.jpg",
+    image: "/images/8.jpg",
     icon: Landmark,
   },
   {
     title: "2D Drafting",
     description:
       "Accurate and detailed 2D drawings for planning and approvals.",
-    image: "/2.jpg",
+    image: "/images/2.jpg",  
     icon: DraftingCompass,
   },
   {
     title: "3D Architectural Visualization",
     description:
       "Realistic 3D visualizations that bring your future project to life.",
-    image: "/20.jpg",
+    image: "/images/20.jpg",
     icon: Boxes,
   },
 ];
@@ -100,6 +101,7 @@ const fadeUp:Variants= {
 };
 
 export default function ServicesPage() {
+  const router = useRouter();
   return (
     <main className="min-h-screen overflow-hidden bg-background text-foreground">
 
@@ -179,14 +181,17 @@ export default function ServicesPage() {
                 custom={4}
                 className="mt-10 flex flex-wrap gap-5"
               >
-                <Button className="primary-button h-14 px-8 text-sm font-semibold">
+                <Button 
+                  onClick={() => router.push("/portfolio")}
+                  className="primary-button h-14 px-8 text-sm font-semibold hover:bg-amber-600 cursor-pointer">
                   Explore Services
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
 
                 <Button
                   variant="outline"
-                  className="secondary-button h-14 px-8 text-sm"
+                  className="secondary-button h-14 px-8 text-sm cursor-pointer hover:text-amber-300 cursor-pointer"
+                  onClick={() => router.push("/contact")}
                 >
                   Get Consultation
                 </Button>
@@ -228,7 +233,7 @@ export default function ServicesPage() {
 
                 <div className="relative overflow-hidden rounded-[28px]">
                   <Image
-                    src="/20.jpg"
+                    src="/images/20.jpg"
                     alt="Featured"
                     width={700}
                     height={900}
@@ -337,7 +342,7 @@ export default function ServicesPage() {
 
                       <Button
                         variant="ghost"
-                        className="group/btn h-auto p-0 text-sm font-semibold text-accent hover:bg-transparent"
+                        className="group/btn h-auto p-0 text-sm font-semibold text-accent cursor-pointer hover:text-amber-300"
                       >
                         Learn More
 
@@ -459,7 +464,7 @@ export default function ServicesPage() {
 
                 <div className="relative">
                   <Image
-                    src="/8.jpg"
+                    src="/images/8.jpg"
                     alt="Planning"
                     width={1200}
                     height={600}

@@ -19,7 +19,9 @@ type Message = {
 
 export default function FloatingChat() {
 
- 
+  // =========================
+  // STATE
+  // =========================
 
   const [open, setOpen] =
     useState(false)
@@ -34,7 +36,9 @@ export default function FloatingChat() {
     useState<Message[]>([
       {
         id: crypto.randomUUID(),
+
         role: "assistant",
+
         content:
           "Hello 👋\nHow can Build Associates help you today?"
       }
@@ -43,10 +47,16 @@ export default function FloatingChat() {
   const [sessionId] =
     useState(uuidv4())
 
-  
+  // =========================
+  // REFS
+  // =========================
 
   const messagesEndRef =
     useRef<HTMLDivElement>(null)
+
+  // =========================
+  // AUTO SCROLL
+  // =========================
 
   useEffect(() => {
 
@@ -58,7 +68,9 @@ export default function FloatingChat() {
 
   }, [messages])
 
-  
+  // =========================
+  // QUICK ACTIONS
+  // =========================
 
   const quickActions = [
 
@@ -72,10 +84,13 @@ export default function FloatingChat() {
 
     "Pricing",
 
-    "Book Consultation"
+    "Schedule Consultation"
   ]
 
-  
+  // =========================
+  // SEND MESSAGE
+  // =========================
+
   async function handleSend(
     e?: React.FormEvent
   ) {
@@ -88,7 +103,10 @@ export default function FloatingChat() {
 
       setLoading(true)
 
+      // =========================
       // USER MESSAGE
+      // =========================
+
       const userMessage: Message = {
 
         id: crypto.randomUUID(),
@@ -99,6 +117,7 @@ export default function FloatingChat() {
       }
 
       // ADD USER MESSAGE
+
       setMessages(prev => [
 
         ...prev,
@@ -110,24 +129,54 @@ export default function FloatingChat() {
 
       setInput("")
 
+      // =========================
+      // EMPTY ASSISTANT MESSAGE
+      // =========================
+
+      const assistantId =
+        crypto.randomUUID()
+
+      setMessages(prev => [
+
+        ...prev,
+
+        {
+          id: assistantId,
+
+          role: "assistant",
+
+          content: ""
+        }
+      ])
+
+      // =========================
       // API CALL
-      const response = await fetch("/api/chat", {
+      // =========================
 
-        method: "POST",
+      const response = await fetch(
+        "/api/chat-stream",
+        {
 
-        headers: {
-          "Content-Type": "application/json"
-        },
+          method: "POST",
 
-        body: JSON.stringify({
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-          message: currentInput,
+          body: JSON.stringify({
 
-          sessionId
-        })
-      })
+            message: currentInput,
 
+            sessionId
+          })
+        }
+      )
+
+      // =========================
       // ERROR HANDLING
+      // =========================
+
       if (!response.ok) {
 
         throw new Error(
@@ -135,27 +184,80 @@ export default function FloatingChat() {
         )
       }
 
-      // JSON RESPONSE
-      const data =
-        await response.json()
+      if (!response.body) {
 
-      // ASSISTANT MESSAGE
-      const assistantMessage: Message = {
-
-        id: crypto.randomUUID(),
-
-        role: "assistant",
-
-        content: data.reply
+        throw new Error(
+          "No response body"
+        )
       }
 
-      // ADD ASSISTANT MESSAGE
-      setMessages(prev => [
+      // =========================
+      // STREAM READER
+      // =========================
 
-        ...prev,
+      const reader =
+        response.body.getReader()
 
-        assistantMessage
-      ])
+      const decoder =
+        new TextDecoder()
+
+      let fullText = ""
+
+      // =========================
+      // READ STREAM
+      // =========================
+
+      while (true) {
+
+        const { done, value } =
+          await reader.read()
+
+        if (done) break
+
+        const chunk =
+          decoder.decode(value)
+
+        fullText += chunk
+
+        // STREAM UPDATE
+
+        setMessages(prev =>
+
+          prev.map(msg =>
+
+            msg.id === assistantId
+
+              ? {
+                  ...msg,
+
+                  content:
+                    fullText + "▋"
+                }
+
+              : msg
+          )
+        )
+      }
+
+      // =========================
+      // REMOVE CURSOR
+      // =========================
+
+      setMessages(prev =>
+
+        prev.map(msg =>
+
+          msg.id === assistantId
+
+            ? {
+                ...msg,
+
+                content: fullText
+              }
+
+            : msg
+        )
+      )
 
     } catch (error) {
 
@@ -181,8 +283,9 @@ export default function FloatingChat() {
     }
   }
 
-  
-    
+  // =========================
+  // ENTER KEY
+  // =========================
 
   function handleKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>
@@ -199,10 +302,17 @@ export default function FloatingChat() {
     }
   }
 
-  
+  // =========================
+  // UI
+  // =========================
+
   return (
 
     <>
+      {/* =========================
+          FLOAT BUTTON
+      ========================= */}
+
       <button
 
         onClick={() =>
@@ -237,7 +347,10 @@ export default function FloatingChat() {
 
       </button>
 
-      {/* CHAT WINDOW */}
+      {/* =========================
+          CHAT WINDOW
+      ========================= */}
+
       {open && (
 
         <div
@@ -266,7 +379,10 @@ export default function FloatingChat() {
           "
         >
 
-          {/* HEADER */}
+          {/* =========================
+              HEADER
+          ========================= */}
+
           <div
             className="
               bg-black
@@ -302,7 +418,10 @@ export default function FloatingChat() {
 
           </div>
 
-          {/* QUICK ACTIONS */}
+          {/* =========================
+              QUICK ACTIONS
+          ========================= */}
+
           <div
             className="
               flex
@@ -342,7 +461,10 @@ export default function FloatingChat() {
 
           </div>
 
-          {/* MESSAGES */}
+          {/* =========================
+              MESSAGES
+          ========================= */}
+
           <div
             className="
               flex-1
@@ -406,46 +528,23 @@ export default function FloatingChat() {
               </div>
             ))}
 
-            {/* LOADING */}
+            {/* =========================
+                LOADING
+            ========================= */}
+
             {loading && (
 
               <div className="flex justify-start">
 
                 <div
                   className="
-                    bg-gray-100
-                    px-4
-                    py-3
-                    rounded-2xl
-                    text-sm
+                    text-xs
+                    text-gray-500
                   "
                 >
 
-                  <div className="flex gap-1">
-
-                    <span className="animate-bounce">
-                      •
-                    </span>
-
-                    <span
-                      className="
-                        animate-bounce
-                        delay-100
-                      "
-                    >
-                      •
-                    </span>
-
-                    <span
-                      className="
-                        animate-bounce
-                        delay-200
-                      "
-                    >
-                      •
-                    </span>
-
-                  </div>
+                  Build Associates AI
+                  is analyzing your project...
 
                 </div>
 
@@ -456,7 +555,10 @@ export default function FloatingChat() {
 
           </div>
 
-          {/* INPUT */}
+          {/* =========================
+              INPUT
+          ========================= */}
+
           <form
 
             onSubmit={handleSend}

@@ -249,24 +249,40 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            <Card className="overflow-hidden rounded-[36px] border border-border bg-card">
-              <div className="border-b border-border p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
-                  Visit Our Office
-                </p>
+            <Card className="overflow-hidden rounded-[36px] border border-border bg-card shadow-sm">
 
-                <h3 className="mt-3 text-2xl font-black text-primary">
-                  Hyderabad Office
-                </h3>
+              <div className="flex items-center justify-between border-b border-border p-6">
+
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
+                    Visit Our Office
+                  </p>
+
+                  <h3 className="mt-3 text-2xl font-black text-primary">
+                    Hyderabad Office
+                  </h3>
+                </div>
+
+                {/* <div className="rounded-2xl bg-accent/10 px-4 py-2 text-sm font-medium text-accent">
+                  Open Maps
+                </div> */}
+
               </div>
 
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18"
-                width="100%"
-                height="420"
-                loading="lazy"
-                className="border-0"
-              />
+              <div className="overflow-hidden w-full">
+
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d238.03392115496698!2d78.4046864841337!3d17.337597880417757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb97006e7cc9fd%3A0x9d2e730fd41d3d77!2sS%20.!5e0!3m2!1sen!2sin!4v1779811392941!5m2!1sen!2sin"
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+
+              </div>
+
             </Card>
           </div>
 
@@ -325,7 +341,7 @@ export default function ContactPage() {
             <Card className="premium-card overflow-hidden rounded-[36px]">
               <div className="relative h-[260px] overflow-hidden">
                 <Image
-                  src="/27.png"
+                  src="/images/28.png"
                   alt="Office"
                   fill
                   className="object-cover"

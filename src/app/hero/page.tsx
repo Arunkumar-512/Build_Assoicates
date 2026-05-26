@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion, Variants } from "framer-motion";
 
 import {
@@ -24,7 +25,7 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 
-const fadeUp:Variants= {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: (i = 1) => ({
     opacity: 1,
@@ -38,6 +39,7 @@ const fadeUp:Variants= {
 };
 
 export default function HomePage() {
+  const router = useRouter();
   return (
     <main className="overflow-hidden bg-[#f7f7f5] text-[#111111]">
 
@@ -144,14 +146,18 @@ export default function HomePage() {
                 custom={4}
                 className="mt-10 flex flex-wrap gap-5"
               >
-                <Button className="h-14 rounded-full bg-white px-8 text-sm font-semibold text-black transition-all duration-500 hover:scale-[1.04] hover:bg-amber-300">
+                <Button
+                  onClick={() => router.push("/portfolio")}
+                  className="h-14 rounded-full bg-white px-8 text-sm font-semibold text-black transition-all duration-500 hover:scale-[1.04] hover:bg-amber-300 cursor-pointer"
+                >
                   Explore Projects
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
 
                 <Button
+                  onClick={() => router.push("/contact")}
                   variant="outline"
-                  className="h-14 rounded-full border-white/20 bg-white/5 px-8 text-sm text-white backdrop-blur-xl hover:bg-white/10"
+                  className="h-14 rounded-full border-white/20 bg-white/5 px-8 text-sm text-white backdrop-blur-xl hover:bg-white hover:text-amber-400 cursor-pointer"
                 >
                   Get Consultation
                 </Button>
@@ -296,7 +302,8 @@ export default function HomePage() {
 
           <Button
             variant="ghost"
-            className="w-fit rounded-full border border-black/10 px-7 py-6 hover:bg-black hover:text-white"
+            className="w-fit rounded-full border border-black/10 px-7 py-6 hover:bg-black hover:text-amber-400 cursor-pointer"
+            onClick={() => router.push("/portfolio")}
           >
             View All Projects →
           </Button>
@@ -336,7 +343,9 @@ export default function HomePage() {
                   Elegant spaces crafted with modern luxury aesthetics.
                 </p>
 
-                <button className="mt-6 inline-flex items-center text-sm font-semibold text-white">
+                <button className="mt-6 inline-flex items-center text-sm font-semibold text-white hover:text-amber-300 cursor-pointer"
+                  onClick={() => router.push("/portfolio")}
+                >
                   Explore Project
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </button>
@@ -484,7 +493,10 @@ export default function HomePage() {
               </p>
             </div>
 
-            <Button className="h-16 rounded-full bg-white px-10 text-sm font-semibold text-black transition-all duration-500 hover:scale-105 hover:bg-amber-300">
+            <Button
+              onClick={() => router.push("/contact")}
+              className="h-16 rounded-full bg-white px-10 text-sm font-semibold text-black transition-all duration-500 hover:scale-105 hover:bg-amber-300 cursor-pointer"
+            >
               Start Your Project
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
