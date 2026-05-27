@@ -1,23 +1,47 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import {
+  useEffect,
+  useRef,
+  useState
+} from "react"
 
-import { MessageSquare } from "lucide-react"
+import {
+  MessageSquare,
+  Mic,
+  MicOff,
+  Volume2,
+  VolumeX
+} from "lucide-react"
 
 import ReactMarkdown from "react-markdown"
 
 import { v4 as uuidv4 } from "uuid"
 
+import SpeechRecognition, {
+  useSpeechRecognition
+} from "react-speech-recognition"
+
 type Message = {
-
   id: string
-
   role: "user" | "assistant"
-
   content: string
 }
 
 export default function FloatingChat() {
+
+  // =========================
+  // HYDRATION FIX
+  // =========================
+
+  const [mounted, setMounted] =
+    useState(false)
+
+  useEffect(() => {
+
+    setMounted(true)
+
+  }, [])
 
   // =========================
   // STATE
@@ -32,10 +56,13 @@ export default function FloatingChat() {
   const [loading, setLoading] =
     useState(false)
 
+  const [voiceEnabled, setVoiceEnabled] =
+    useState(true)
+
   const [messages, setMessages] =
     useState<Message[]>([
       {
-        id: crypto.randomUUID(),
+        id: "welcome-message",
 
         role: "assistant",
 
@@ -46,6 +73,17 @@ export default function FloatingChat() {
 
   const [sessionId] =
     useState(uuidv4())
+
+  // =========================
+  // VOICE RECOGNITION
+  // =========================
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition()
 
   // =========================
   // REFS
@@ -62,11 +100,35 @@ export default function FloatingChat() {
 
     messagesEndRef.current
       ?.scrollIntoView({
-
         behavior: "smooth"
       })
 
   }, [messages])
+
+  // =========================
+  // LOAD VOICES
+  // =========================
+
+  useEffect(() => {
+
+    if (!mounted) return
+
+    const loadVoices = () => {
+
+      window.speechSynthesis.getVoices()
+    }
+
+    loadVoices()
+
+    if (
+      speechSynthesis.onvoiceschanged !== undefined
+    ) {
+
+      speechSynthesis.onvoiceschanged =
+        loadVoices
+    }
+
+  }, [mounted])
 
   // =========================
   // QUICK ACTIONS
@@ -88,16 +150,246 @@ export default function FloatingChat() {
   ]
 
   // =========================
+  // START LISTENING
+  // =========================
+
+  const startListening = () => {
+
+    if (
+      typeof window !== "undefined"
+    ) {
+
+      window.speechSynthesis.cancel()
+    }
+
+    resetTranscript()
+
+    SpeechRecognition.startListening({
+
+      continuous: true,
+
+      language: "en-IN"
+    })
+  }
+
+  // =========================
+  // STOP LISTENING
+  // =========================
+
+  const stopListening = () => {
+
+    SpeechRecognition.stopListening()
+
+    const finalText =
+      transcript.trim()
+
+    setInput(finalText)
+
+    setTimeout(() => {
+
+      if (finalText) {
+
+        handleSend(undefined, finalText)
+      }
+
+    }, 500)
+  }
+
+  // =========================
+  // SPEAK FUNCTION
+  // =========================
+
+  const speak = (text: string) => {
+
+    // DO NOT SPEAK IF MUTED
+
+    if (!voiceEnabled) return
+
+    if (
+      typeof window === "undefined" ||
+      !window.speechSynthesis
+    ) {
+      return
+    }
+
+    // STOP PREVIOUS SPEECH
+
+    window.speechSynthesis.cancel()
+
+    const utterance =
+      new SpeechSynthesisUtterance(text)
+
+    // =========================
+    // FEMALE VOICE
+    // =========================
+
+    const voices =
+      window.speechSynthesis.getVoices()
+
+    const femaleVoice =
+
+      voices.find((voice) =>
+        voice.name.includes(
+          "Google UK English Female"
+        )
+      )
+
+      ||
+
+      voices.find((voice) =>
+        voice.name.includes("Samantha")
+      )
+
+      ||
+
+      voices.find((voice) =>
+        voice.name.includes("Jenny")
+      )
+
+      ||
+
+      voices.find((voice) =>
+        voice.name
+          .toLowerCase()
+          .includes("female")
+      )
+
+    if (femaleVoice) {
+
+      utterance.voice =
+        femaleVoice
+    }
+
+    // =========================
+    // SETTINGS
+    // =========================
+
+    utterance.rate = 1
+
+    utterance.pitch = 1.1
+
+    utterance.volume = 1
+
+    utterance.lang = "en-US"
+
+    // =========================
+    // SPEAK
+    // =========================
+
+    window.speechSynthesis.speak(
+      utterance
+    )
+  }
+
+  // =========================
+  // TOGGLE VOICE
+  // =========================
+
+  const toggleVoice = () => {
+
+    // =========================
+    // MUTE
+    // =========================
+
+    if (voiceEnabled) {
+
+      window.speechSynthesis.cancel()
+
+      setVoiceEnabled(false)
+
+      return
+    }
+
+    // =========================
+    // UNMUTE
+    // =========================
+
+    setVoiceEnabled(true)
+
+    // SPEAK LAST MESSAGE AGAIN
+
+    const lastAssistantMessage =
+      [...messages]
+        .reverse()
+        .find(
+          (msg) =>
+            msg.role === "assistant"
+        )
+
+    if (
+      lastAssistantMessage?.content
+    ) {
+
+      setTimeout(() => {
+
+        // DIRECT SPEAK
+        const utterance =
+          new SpeechSynthesisUtterance(
+            lastAssistantMessage.content
+          )
+
+        const voices =
+          window.speechSynthesis.getVoices()
+
+        const femaleVoice =
+
+          voices.find((voice) =>
+            voice.name.includes(
+              "Google UK English Female"
+            )
+          )
+
+          ||
+
+          voices.find((voice) =>
+            voice.name.includes(
+              "Samantha"
+            )
+          )
+
+          ||
+
+          voices.find((voice) =>
+            voice.name.includes(
+              "Jenny"
+            )
+          )
+
+        if (femaleVoice) {
+
+          utterance.voice =
+            femaleVoice
+        }
+
+        utterance.rate = 1
+
+        utterance.pitch = 1.1
+
+        utterance.lang = "en-US"
+
+        window.speechSynthesis.speak(
+          utterance
+        )
+
+      }, 300)
+    }
+  }
+
+  // =========================
   // SEND MESSAGE
   // =========================
 
   async function handleSend(
-    e?: React.FormEvent
+    e?: React.FormEvent,
+    voiceText?: string
   ) {
 
     e?.preventDefault()
 
-    if (!input.trim()) return
+    const finalMessage =
+      voiceText || input
+
+    if (!finalMessage.trim()) return
 
     try {
 
@@ -109,14 +401,12 @@ export default function FloatingChat() {
 
       const userMessage: Message = {
 
-        id: crypto.randomUUID(),
+        id: uuidv4(),
 
         role: "user",
 
-        content: input
+        content: finalMessage
       }
-
-      // ADD USER MESSAGE
 
       setMessages(prev => [
 
@@ -125,16 +415,14 @@ export default function FloatingChat() {
         userMessage
       ])
 
-      const currentInput = input
-
       setInput("")
 
       // =========================
-      // EMPTY ASSISTANT MESSAGE
+      // EMPTY AI MESSAGE
       // =========================
 
       const assistantId =
-        crypto.randomUUID()
+        uuidv4()
 
       setMessages(prev => [
 
@@ -166,16 +454,12 @@ export default function FloatingChat() {
 
           body: JSON.stringify({
 
-            message: currentInput,
+            message: finalMessage,
 
             sessionId
           })
         }
       )
-
-      // =========================
-      // ERROR HANDLING
-      // =========================
 
       if (!response.ok) {
 
@@ -203,14 +487,12 @@ export default function FloatingChat() {
 
       let fullText = ""
 
-      // =========================
-      // READ STREAM
-      // =========================
-
       while (true) {
 
-        const { done, value } =
-          await reader.read()
+        const {
+          done,
+          value
+        } = await reader.read()
 
         if (done) break
 
@@ -218,8 +500,6 @@ export default function FloatingChat() {
           decoder.decode(value)
 
         fullText += chunk
-
-        // STREAM UPDATE
 
         setMessages(prev =>
 
@@ -240,7 +520,7 @@ export default function FloatingChat() {
       }
 
       // =========================
-      // REMOVE CURSOR
+      // FINAL RESPONSE
       // =========================
 
       setMessages(prev =>
@@ -259,6 +539,12 @@ export default function FloatingChat() {
         )
       )
 
+      // =========================
+      // SPEAK RESPONSE
+      // =========================
+
+      speak(fullText)
+
     } catch (error) {
 
       console.error(error)
@@ -268,7 +554,7 @@ export default function FloatingChat() {
         ...prev,
 
         {
-          id: crypto.randomUUID(),
+          id: uuidv4(),
 
           role: "assistant",
 
@@ -303,15 +589,22 @@ export default function FloatingChat() {
   }
 
   // =========================
+  // PREVENT HYDRATION ERRORS
+  // =========================
+
+  if (!mounted) {
+
+    return null
+  }
+
+  // =========================
   // UI
   // =========================
 
   return (
 
     <>
-      {/* =========================
-          FLOAT BUTTON
-      ========================= */}
+      {/* FLOAT BUTTON */}
 
       <button
 
@@ -325,18 +618,14 @@ export default function FloatingChat() {
           right-4
           md:right-6
           z-50
-
           w-14
           h-14
-
           rounded-full
           bg-black
           text-white
-
           flex
           items-center
           justify-center
-
           shadow-lg
           hover:scale-110
           transition
@@ -347,9 +636,7 @@ export default function FloatingChat() {
 
       </button>
 
-      {/* =========================
-          CHAT WINDOW
-      ========================= */}
+      {/* CHAT WINDOW */}
 
       {open && (
 
@@ -360,28 +647,21 @@ export default function FloatingChat() {
             right-4
             md:right-6
             z-50
-
             w-[95vw]
             sm:w-[380px]
-
             h-[85vh]
             sm:h-[650px]
-
             bg-white
             rounded-2xl
             shadow-2xl
             border
-
             flex
             flex-col
-
             overflow-hidden
           "
         >
 
-          {/* =========================
-              HEADER
-          ========================= */}
+          {/* HEADER */}
 
           <div
             className="
@@ -389,7 +669,6 @@ export default function FloatingChat() {
               text-white
               px-4
               py-4
-
               flex
               justify-between
               items-center
@@ -403,24 +682,52 @@ export default function FloatingChat() {
               </div>
 
               <div className="text-xs text-gray-300">
-                Architecture Consultant
+                Voice Architecture Consultant
               </div>
 
             </div>
 
-            <button
-              onClick={() =>
-                setOpen(false)
-              }
-            >
-              ✕
-            </button>
+            <div className="flex items-center gap-3">
+
+              {/* VOLUME BUTTON */}
+
+              <button
+                type="button"
+                onClick={toggleVoice}
+              >
+
+                {voiceEnabled
+                  ? (
+                    <Volume2
+                      size={18}
+                      className="text-green-400"
+                    />
+                  )
+                  : (
+                    <VolumeX
+                      size={18}
+                      className="text-gray-400"
+                    />
+                  )
+                }
+
+              </button>
+
+              {/* CLOSE BUTTON */}
+
+              <button
+                onClick={() =>
+                  setOpen(false)
+                }
+              >
+                ✕
+              </button>
+
+            </div>
 
           </div>
 
-          {/* =========================
-              QUICK ACTIONS
-          ========================= */}
+          {/* QUICK ACTIONS */}
 
           <div
             className="
@@ -461,9 +768,7 @@ export default function FloatingChat() {
 
           </div>
 
-          {/* =========================
-              MESSAGES
-          ========================= */}
+          {/* MESSAGES */}
 
           <div
             className="
@@ -481,21 +786,17 @@ export default function FloatingChat() {
                 key={message.id}
 
                 className={`
-
                   flex
-
-                  ${message.role === "user"
-
-                    ? "justify-end"
-
-                    : "justify-start"
+                  ${
+                    message.role === "user"
+                      ? "justify-end"
+                      : "justify-start"
                   }
                 `}
               >
 
                 <div
                   className={`
-
                     max-w-[85%]
                     px-4
                     py-3
@@ -503,12 +804,10 @@ export default function FloatingChat() {
                     text-sm
                     whitespace-pre-wrap
                     leading-7
-
-                    ${message.role === "user"
-
-                      ? "bg-black text-white"
-
-                      : "bg-gray-100 text-black"
+                    ${
+                      message.role === "user"
+                        ? "bg-black text-white"
+                        : "bg-gray-100 text-black"
                     }
                   `}
                 >
@@ -527,10 +826,6 @@ export default function FloatingChat() {
 
               </div>
             ))}
-
-            {/* =========================
-                LOADING
-            ========================= */}
 
             {loading && (
 
@@ -555,9 +850,7 @@ export default function FloatingChat() {
 
           </div>
 
-          {/* =========================
-              INPUT
-          ========================= */}
+          {/* INPUT */}
 
           <form
 
@@ -600,6 +893,44 @@ pricing...
               "
             />
 
+            {/* MIC BUTTON */}
+
+            {browserSupportsSpeechRecognition && (
+
+              <button
+
+                type="button"
+
+                onClick={
+                  listening
+                    ? stopListening
+                    : startListening
+                }
+
+                className={`
+                  px-4
+                  rounded-xl
+                  text-white
+                  transition
+                  ${
+                    listening
+                      ? "bg-red-500 animate-pulse"
+                      : "bg-[#C4845C]"
+                  }
+                `}
+              >
+
+                {listening
+                  ? <MicOff size={18} />
+                  : <Mic size={18} />
+                }
+
+              </button>
+
+            )}
+
+            {/* SEND */}
+
             <button
 
               type="submit"
@@ -624,6 +955,17 @@ pricing...
             </button>
 
           </form>
+
+          {/* LISTENING */}
+
+          {listening && (
+
+            <div className="px-4 pb-3 text-xs text-red-500">
+
+              Listening...
+
+            </div>
+          )}
 
         </div>
       )}

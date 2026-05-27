@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import ReactMarkdown from "react-markdown"
+import VoiceAgent from "../global/voice-agent"
 
 type Message = {
   id: string
@@ -379,6 +380,7 @@ villa projects...
             focus:ring-black
           "
         />
+        <VoiceAgent />
 
         <button
 
